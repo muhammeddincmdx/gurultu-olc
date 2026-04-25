@@ -1,42 +1,43 @@
-# Gizlilik Politikası
+﻿# Gizlilik PolitikasÄ±
 
-Son güncelleme: 25 Nisan 2026
+Son gÃ¼ncelleme: 25 Nisan 2026
 
-## Uygulama Hakkında
+## Uygulama HakkÄ±nda
 
-Gürültü Ölçer, cihaz mikrofonunu kullanarak ortamdaki ses seviyesini anlık olarak ölçer ve kullanıcıya dB cinsinden gösterir.
+GÃ¼rÃ¼ltÃ¼ Ã–lÃ§er, cihaz mikrofonunu kullanarak ortamdaki ses seviyesini anlÄ±k olarak Ã¶lÃ§er ve kullanÄ±cÄ±ya dB cinsinden gÃ¶sterir.
 
 ## Toplanan Veriler
 
-- Mikrofon erişimi: Uygulama yalnızca anlık ses seviyesini hesaplamak için mikrofonu kullanır.
-- Reklam verileri: Uygulama, reklam göstermek için Google Mobile Ads (AdMob) SDK kullanır. Bu SDK; cihaz tanımlayıcıları, reklam etkileşimleri ve teknik tanılama verileri gibi bazı bilgileri işleyebilir.
+- Mikrofon eriÅŸimi: Uygulama yalnÄ±zca anlÄ±k ses seviyesini hesaplamak iÃ§in mikrofonu kullanÄ±r.
+- Reklam verileri: Uygulama, reklam gÃ¶stermek iÃ§in Google Mobile Ads (AdMob) SDK kullanÄ±r. Bu SDK; cihaz tanÄ±mlayÄ±cÄ±larÄ±, reklam etkileÅŸimleri ve teknik tanÄ±lama verileri gibi bazÄ± bilgileri iÅŸleyebilir.
 
-## Verilerin Kullanım Amaçları
+## Verilerin KullanÄ±m AmaÃ§larÄ±
 
-- Anlık gürültü seviyesini ölçmek ve göstermek
-- Uygulama içinde reklam göstermek
-- Reklam teslimi, güvenlik ve performans süreçlerini sağlamak
+- AnlÄ±k gÃ¼rÃ¼ltÃ¼ seviyesini Ã¶lÃ§mek ve gÃ¶stermek
+- Uygulama iÃ§inde reklam gÃ¶stermek
+- Reklam teslimi, gÃ¼venlik ve performans sÃ¼reÃ§lerini saÄŸlamak
 
-## Veri Paylaşımı
+## Veri PaylaÅŸÄ±mÄ±
 
-- Uygulama geliştiricisi olarak biz, mikrofon ses kaydını sunucuya göndermez ve saklamayız.
-- Reklam hizmeti için kullanılan AdMob SDK tarafından işlenen veriler, Google'ın kendi politikalarına tabidir.
+- Uygulama geliÅŸtiricisi olarak biz, mikrofon ses kaydÄ±nÄ± sunucuya gÃ¶ndermez ve saklamayÄ±z.
+- Reklam hizmeti iÃ§in kullanÄ±lan AdMob SDK tarafÄ±ndan iÅŸlenen veriler, Google'Ä±n kendi politikalarÄ±na tabidir.
 
 ## Veri Saklama
 
-- Uygulama, kalıcı ses kaydı tutmaz.
-- Ölçüm ve uygulama çalışması sırasında oluşan geçici teknik veriler cihazda kısa süreli tutulabilir.
+- Uygulama, kalÄ±cÄ± ses kaydÄ± tutmaz.
+- Ã–lÃ§Ã¼m ve uygulama Ã§alÄ±ÅŸmasÄ± sÄ±rasÄ±nda oluÅŸan geÃ§ici teknik veriler cihazda kÄ±sa sÃ¼reli tutulabilir.
 
-## İzinler
+## Ä°zinler
 
-- `RECORD_AUDIO`: Gürültü seviyesini ölçmek için gereklidir.
-- `INTERNET` ve `ACCESS_NETWORK_STATE`: Reklam içeriklerinin yüklenmesi ve ağ durumunun yönetimi için gereklidir.
-- `com.google.android.gms.permission.AD_ID`: Reklam kimliği ile ilgili işlemler için kullanılabilir.
+- `RECORD_AUDIO`: GÃ¼rÃ¼ltÃ¼ seviyesini Ã¶lÃ§mek iÃ§in gereklidir.
+- `INTERNET` ve `ACCESS_NETWORK_STATE`: Reklam iÃ§eriklerinin yÃ¼klenmesi ve aÄŸ durumunun yÃ¶netimi iÃ§in gereklidir.
+- `com.google.android.gms.permission.AD_ID`: Reklam kimliÄŸi ile ilgili iÅŸlemler iÃ§in kullanÄ±labilir.
 
-## Çocukların Gizliliği
+## Ã‡ocuklarÄ±n GizliliÄŸi
 
-Bu uygulama özellikle çocuklara yönelik tasarlanmamıştır.
+Bu uygulama Ã¶zellikle Ã§ocuklara yÃ¶nelik tasarlanmamÄ±ÅŸtÄ±r.
 
-## İletişim
+## Ä°letiÅŸim
 
-Gizlilik politikası ile ilgili sorular için: `iletisim@mdstudio.app`
+Gizlilik politikasÄ± ile ilgili sorular iÃ§in: `mdstudiohelp@gmail.com`
+
