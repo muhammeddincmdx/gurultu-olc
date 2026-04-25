@@ -1,0 +1,16 @@
+﻿# Gradle
+.gradle/
+.gradle-bin/
+**/build/
+
+# Local config
+local.properties
+keystore.properties
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
