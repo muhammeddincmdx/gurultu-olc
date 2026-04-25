@@ -1,41 +1,42 @@
-# Gizlilik Politikasi
+# Gizlilik Politikası
 
-Son guncelleme: 20 Nisan 2026
+Son güncelleme: 25 Nisan 2026
 
-## Uygulama
+## Uygulama Hakkında
 
-Gurultu Olcer, cihaz mikrofonunu kullanarak ortamdaki ses siddetini olcer ve kullaniciya anlik seviye gostergesi sunar.
+Gürültü Ölçer, cihaz mikrofonunu kullanarak ortamdaki ses seviyesini anlık olarak ölçer ve kullanıcıya dB cinsinden gösterir.
 
-## Toplanan veriler
+## Toplanan Veriler
 
-- Mikrofon erisimi: Uygulama yalnizca anlik ses siddetini hesaplamak icin mikrofonu kullanir.
-- Reklam verileri: Uygulama, reklam gosterebilmek icin Google Mobile Ads (AdMob) SDK kullanir. Bu SDK cihaz ve reklam etkilesimlerine iliskin bazi teknik verileri isleyebilir.
+- Mikrofon erişimi: Uygulama yalnızca anlık ses seviyesini hesaplamak için mikrofonu kullanır.
+- Reklam verileri: Uygulama, reklam göstermek için Google Mobile Ads (AdMob) SDK kullanır. Bu SDK; cihaz tanımlayıcıları, reklam etkileşimleri ve teknik tanılama verileri gibi bazı bilgileri işleyebilir.
 
-## Verilerin kullanimi
+## Verilerin Kullanım Amaçları
 
-- Ses siddeti olcumu yapmak
-- Uygulama ici reklam gostermek
-- Uygulama performansi ve reklam teslimini saglamak
+- Anlık gürültü seviyesini ölçmek ve göstermek
+- Uygulama içinde reklam göstermek
+- Reklam teslimi, güvenlik ve performans süreçlerini sağlamak
 
-## Veri paylasimi
+## Veri Paylaşımı
 
-- Uygulama sahibinin kendisi mikrofon kayitlarini saklamaz veya satmaz.
-- Reklam gostermek icin Google Mobile Ads SDK kullanilir. SDK'nin veri kullanimi Google'in kendi gizlilik kosullarina tabidir.
+- Uygulama geliştiricisi olarak biz, mikrofon ses kaydını sunucuya göndermez ve saklamayız.
+- Reklam hizmeti için kullanılan AdMob SDK tarafından işlenen veriler, Google'ın kendi politikalarına tabidir.
 
-## Veri saklama
+## Veri Saklama
 
-- Uygulama, olcum icin kalici ses kaydi tutmaz.
-- Gecici teknik dosyalar cihazin onbellek alaninda tutulabilir ve uygulama tarafindan silinebilir.
+- Uygulama, kalıcı ses kaydı tutmaz.
+- Ölçüm ve uygulama çalışması sırasında oluşan geçici teknik veriler cihazda kısa süreli tutulabilir.
 
-## Izinler
+## İzinler
 
-- `RECORD_AUDIO`: anlik gurultu seviyesini olcmek icin gerekir.
-- `INTERNET` ve `ACCESS_NETWORK_STATE`: reklam iceriginin yuklenmesi icin gerekir.
+- `RECORD_AUDIO`: Gürültü seviyesini ölçmek için gereklidir.
+- `INTERNET` ve `ACCESS_NETWORK_STATE`: Reklam içeriklerinin yüklenmesi ve ağ durumunun yönetimi için gereklidir.
+- `com.google.android.gms.permission.AD_ID`: Reklam kimliği ile ilgili işlemler için kullanılabilir.
 
-## Cocuklar
+## Çocukların Gizliliği
 
-Bu uygulama ozellikle cocuklara yonelik tasarlanmamistir.
+Bu uygulama özellikle çocuklara yönelik tasarlanmamıştır.
 
-## Iletisim
+## İletişim
 
-Play Store yayininda yer alacak gelistirici e-posta adresinizi ve destek baglantinizi burada guncelleyin.
+Gizlilik politikası ile ilgili sorular için: `iletisim@mdstudio.app`
