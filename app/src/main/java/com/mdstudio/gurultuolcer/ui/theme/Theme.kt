@@ -1,4 +1,4 @@
-package com.example.gurultuolcer.ui.theme
+﻿package com.mdstudio.gurultuolcer.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -101,3 +101,4 @@ fun GurultuOlcerTheme(
         content = content,
     )
 }
+

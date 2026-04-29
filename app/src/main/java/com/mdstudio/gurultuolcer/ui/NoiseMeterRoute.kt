@@ -1,4 +1,4 @@
-package com.example.gurultuolcer.ui
+﻿package com.mdstudio.gurultuolcer.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -8,10 +8,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import com.example.gurultuolcer.audio.NoiseMonitor
-import com.example.gurultuolcer.audio.NoiseSample
+import com.mdstudio.gurultuolcer.R
+import com.mdstudio.gurultuolcer.audio.NoiseMonitor
+import com.mdstudio.gurultuolcer.audio.NoiseSample
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -30,6 +32,8 @@ fun NoiseMeterRoute(
     var isMeasuring by remember { mutableStateOf(false) }
     var hasAskedPermission by remember { mutableStateOf(false) }
     var level by remember { mutableFloatStateOf(24f) }
+    var isThresholdAlarmEnabled by rememberSaveable { mutableStateOf(false) }
+    var thresholdDb by rememberSaveable { mutableFloatStateOf(80f) }
     val history = remember { mutableStateListOf<Float>().apply { repeat(20) { add(0.18f) } } }
 
     DisposableEffect(Unit) {
@@ -72,9 +76,10 @@ fun NoiseMeterRoute(
             val stableLevel = if (delta < 2.2f) smooth else displayLevel
             smooth = (smooth * 0.80f) + (stableLevel * 0.20f)
 
-            level = smooth
+            val adjustedLevel = smooth.coerceIn(20f, 105f)
+            level = adjustedLevel
             history.removeFirstOrNull()
-            history.add((smooth / 105f).coerceIn(0.08f, 1f))
+            history.add((adjustedLevel / 105f).coerceIn(0.08f, 1f))
 
             if (!isActive) break
             delay(180)
@@ -85,12 +90,15 @@ fun NoiseMeterRoute(
     NoiseMeterScreen(
         state = NoiseUiState(
             level = level,
-            label = category.title,
-            description = category.description,
+            labelRes = category.titleRes,
+            descriptionRes = category.descriptionRes,
             isMeasuring = isMeasuring,
             hasPermission = hasAudioPermission,
             shouldShowPermissionRationale = shouldShowPermissionRationale,
             history = history.toList(),
+            isThresholdAlarmEnabled = isThresholdAlarmEnabled,
+            thresholdDb = thresholdDb,
+            isThresholdExceeded = isThresholdAlarmEnabled && level >= thresholdDb,
         ),
         onPrimaryAction = {
             if (!hasAudioPermission) {
@@ -101,19 +109,22 @@ fun NoiseMeterRoute(
         },
         onPermissionAction = onRequestPermission,
         onOpenSettings = onOpenAppSettings,
+        onThresholdAlarmEnabledChange = { isThresholdAlarmEnabled = it },
+        onThresholdDbChange = { thresholdDb = it.coerceIn(60f, 100f) },
     )
 }
 
 private fun classifyNoise(level: Float): NoiseCategory {
     return when {
-        level < 32f -> NoiseCategory("Sessiz", "Kütüphane, yatak odası veya sakin ofis seviyesi.")
-        level < 50f -> NoiseCategory("Rahat", "Normal konuşma öncesi ev içi arka plan seviyesi.")
-        level < 70f -> NoiseCategory("Canlı", "Konuşma, cadde veya hareketli çalışma alanı.")
-        else -> NoiseCategory("Yüksek", "Uzun süre maruz kalırsan yorucu olabilir.")
+        level < 32f -> NoiseCategory(R.string.noise_state_silent, R.string.noise_desc_silent)
+        level < 50f -> NoiseCategory(R.string.noise_state_comfort, R.string.noise_desc_comfort)
+        level < 70f -> NoiseCategory(R.string.noise_state_live, R.string.noise_desc_live)
+        else -> NoiseCategory(R.string.noise_state_high, R.string.noise_desc_high)
     }
 }
 
 private data class NoiseCategory(
-    val title: String,
-    val description: String,
+    val titleRes: Int,
+    val descriptionRes: Int,
 )
+

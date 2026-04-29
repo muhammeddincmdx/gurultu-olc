@@ -1,5 +1,51 @@
-<resources>
-    <string name="app_name">Gürültü Ölçer</string>
+﻿<resources>
+    <string name="app_name">Noise Meter</string>
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+
+    <string name="noise_meter_subtitle">Track ambient sound live and get a clearer measurement view.</string>
+    <string name="status_live">Live</string>
+    <string name="status_ready">Ready</string>
+    <string name="settings_title_short">Settings</string>
+
+    <string name="action_grant_microphone">Grant microphone permission</string>
+    <string name="action_start_measurement">Start measurement</string>
+    <string name="action_stop_measurement">Stop measurement</string>
+    <string name="action_close">Close</string>
+    <string name="action_reset_zoom">Reset zoom</string>
+    <string name="action_request_permission">Request permission</string>
+    <string name="action_open_settings">Open settings</string>
+
+    <string name="metric_status">Status</string>
+    <string name="metric_level">Level</string>
+    <string name="metric_balance">Balance</string>
+    <string name="balance_calm">Calm</string>
+    <string name="balance_balanced">Balanced</string>
+    <string name="balance_intense">Intense</string>
+
+    <string name="db_value">%1$d dB</string>
+    <string name="live_level">Live level</string>
+    <string name="last_seconds">Last few seconds</string>
+
+    <string name="setting_night_light">Night light</string>
+    <string name="setting_night_light_level">Night light level</string>
+    <string name="setting_pinch_zoom">Two-finger zoom: %1$.2fx</string>
+    <string name="setting_calibration">Calibration offset: %1$.1f dB</string>
+    <string name="setting_threshold_alarm">Threshold alarm</string>
+    <string name="setting_threshold_db">Threshold level: %1$d dB</string>
+    <string name="threshold_exceeded">High noise alert! %1$d dB (limit %2$d dB)</string>
+
+    <string name="permission_required_title">Microphone permission required</string>
+    <string name="permission_rationale_text">Live measurement does not work without microphone permission. Request permission again.</string>
+    <string name="permission_settings_text">Permission may be disabled. Open app settings and enable microphone permission.</string>
+
+    <string name="noise_state_silent">Silent</string>
+    <string name="noise_state_comfort">Comfort</string>
+    <string name="noise_state_live">Active</string>
+    <string name="noise_state_high">High</string>
+
+    <string name="noise_desc_silent">Library, bedroom, or calm office level.</string>
+    <string name="noise_desc_comfort">Typical home background level before conversation.</string>
+    <string name="noise_desc_live">Conversation, street, or active workspace level.</string>
+    <string name="noise_desc_high">Long exposure at this level may be tiring.</string>
 </resources>

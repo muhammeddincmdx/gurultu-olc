@@ -1,4 +1,4 @@
-package com.example.gurultuolcer
+﻿package com.mdstudio.gurultuolcer
 
 import android.Manifest
 import android.content.Intent
@@ -15,8 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
-import com.example.gurultuolcer.ui.NoiseMeterRoute
-import com.example.gurultuolcer.ui.theme.GurultuOlcerTheme
+import com.mdstudio.gurultuolcer.ui.NoiseMeterRoute
+import com.mdstudio.gurultuolcer.ui.theme.GurultuOlcerTheme
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,3 +76,4 @@ class MainActivity : ComponentActivity() {
         )
     }
 }
+

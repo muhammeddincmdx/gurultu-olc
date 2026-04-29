@@ -1,0 +1,51 @@
+﻿<resources>
+    <string name="app_name">Gürültü Ölçer</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+
+    <string name="noise_meter_subtitle">Ortam sesini canlı izle ve daha net bir ölçüm görünümü elde et.</string>
+    <string name="status_live">Canlı</string>
+    <string name="status_ready">Hazır</string>
+    <string name="settings_title_short">Ayarlar</string>
+
+    <string name="action_grant_microphone">Mikrofon izni ver</string>
+    <string name="action_start_measurement">Ölçümü başlat</string>
+    <string name="action_stop_measurement">Ölçümü durdur</string>
+    <string name="action_close">Kapat</string>
+    <string name="action_reset_zoom">Zoom sıfırla</string>
+    <string name="action_request_permission">İzin iste</string>
+    <string name="action_open_settings">Ayarları aç</string>
+
+    <string name="metric_status">Durum</string>
+    <string name="metric_level">Seviye</string>
+    <string name="metric_balance">Denge</string>
+    <string name="balance_calm">Sakin</string>
+    <string name="balance_balanced">Dengeli</string>
+    <string name="balance_intense">Yoğun</string>
+
+    <string name="db_value">%1$d dB</string>
+    <string name="live_level">Canlı seviye</string>
+    <string name="last_seconds">Son birkaç saniye</string>
+
+    <string name="setting_night_light">Gece ışığı</string>
+    <string name="setting_night_light_level">Gece ışığı seviyesi</string>
+    <string name="setting_pinch_zoom">İki parmak zoom: %1$.2fx</string>
+    <string name="setting_calibration">Kalibrasyon farkı: %1$.1f dB</string>
+    <string name="setting_threshold_alarm">Eşik alarmı</string>
+    <string name="setting_threshold_db">Eşik seviyesi: %1$d dB</string>
+    <string name="threshold_exceeded">Yüksek ses uyarısı! %1$d dB (sınır %2$d dB)</string>
+
+    <string name="permission_required_title">Mikrofon izni gerekli</string>
+    <string name="permission_rationale_text">Mikrofon izni olmadan canlı ölçüm çalışmaz. İzni tekrar iste.</string>
+    <string name="permission_settings_text">İzin kapalı olabilir. Uygulama ayarlarından mikrofon iznini aç.</string>
+
+    <string name="noise_state_silent">Sessiz</string>
+    <string name="noise_state_comfort">Rahat</string>
+    <string name="noise_state_live">Canlı</string>
+    <string name="noise_state_high">Yüksek</string>
+
+    <string name="noise_desc_silent">Kütüphane, yatak odası veya sakin ofis seviyesi.</string>
+    <string name="noise_desc_comfort">Normal konuşma öncesi ev içi arka plan seviyesi.</string>
+    <string name="noise_desc_live">Konuşma, cadde veya hareketli çalışma alanı.</string>
+    <string name="noise_desc_high">Uzun süre maruz kalırsan yorucu olabilir.</string>
+</resources>

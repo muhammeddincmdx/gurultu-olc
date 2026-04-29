@@ -6,6 +6,8 @@
 # Local config
 local.properties
 keystore.properties
+upload-keystore.jks
+app/upload-keystore.jks
 
 # IDE
 .idea/

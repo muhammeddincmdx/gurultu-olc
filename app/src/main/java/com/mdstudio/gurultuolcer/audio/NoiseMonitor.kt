@@ -1,4 +1,4 @@
-package com.example.gurultuolcer.audio
+﻿package com.mdstudio.gurultuolcer.audio
 
 import android.content.Context
 import android.media.MediaRecorder
@@ -64,3 +64,4 @@ class NoiseMonitor(private val context: Context) {
         }
     }
 }
+

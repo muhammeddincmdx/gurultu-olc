@@ -1,10 +1,11 @@
-﻿package com.example.gurultuolcer.ui
+﻿package com.mdstudio.gurultuolcer.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -29,12 +30,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,23 +52,28 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.mdstudio.gurultuolcer.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
 data class NoiseUiState(
     val level: Float,
-    val label: String,
-    val description: String,
+    val labelRes: Int,
+    val descriptionRes: Int,
     val isMeasuring: Boolean,
     val hasPermission: Boolean,
     val shouldShowPermissionRationale: Boolean,
     val history: List<Float>,
+    val isThresholdAlarmEnabled: Boolean,
+    val thresholdDb: Float,
+    val isThresholdExceeded: Boolean,
 )
 
 @Composable
@@ -70,6 +82,8 @@ fun NoiseMeterScreen(
     onPrimaryAction: () -> Unit,
     onPermissionAction: () -> Unit,
     onOpenSettings: () -> Unit,
+    onThresholdAlarmEnabledChange: (Boolean) -> Unit,
+    onThresholdDbChange: (Float) -> Unit,
 ) {
     val colorScheme = MaterialTheme.colorScheme
     val isDark = colorScheme.background.red < 0.5f
@@ -88,6 +102,9 @@ fun NoiseMeterScreen(
     )
     val scrollState = rememberScrollState()
     val adHeight = 106.dp
+    var isSettingsPanelOpen by rememberSaveable { mutableStateOf(false) }
+    val labelText = stringResource(state.labelRes)
+    val descriptionText = stringResource(state.descriptionRes)
 
     Surface(modifier = Modifier.fillMaxSize(), color = colorScheme.background) {
         BoxWithConstraints(
@@ -116,7 +133,12 @@ fun NoiseMeterScreen(
                         bottom = bottomPadding + adHeight + 20.dp,
                     ),
             ) {
-                HeaderBlock(accent = accent, label = state.label, isMeasuring = state.isMeasuring)
+                HeaderBlock(
+                    accent = accent,
+                    label = labelText,
+                    isMeasuring = state.isMeasuring,
+                    onOpenSettingsPanel = { isSettingsPanelOpen = true },
+                )
                 Spacer(modifier = Modifier.height(18.dp))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -124,6 +146,10 @@ fun NoiseMeterScreen(
                 ) {
                     Gauge(level = animatedLevel, accent = accent)
                     Spacer(modifier = Modifier.height(18.dp))
+                    if (state.isThresholdExceeded) {
+                        AlarmBanner(level = animatedLevel, thresholdDb = state.thresholdDb)
+                        Spacer(modifier = Modifier.height(14.dp))
+                    }
                     Text(
                         text = "${animatedLevel.toInt()} dB",
                         fontSize = 52.sp,
@@ -133,13 +159,13 @@ fun NoiseMeterScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = state.description,
+                        text = descriptionText,
                         style = MaterialTheme.typography.bodyLarge,
                         color = colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
                     )
                     Spacer(modifier = Modifier.height(18.dp))
-                    MetricsRow(level = animatedLevel, accent = accent, label = state.label)
+                    MetricsRow(level = animatedLevel, accent = accent, label = labelText)
                 }
                 Spacer(modifier = Modifier.height(18.dp))
                 GlassCard { MiniWaveform(points = state.history, accent = accent) }
@@ -167,9 +193,9 @@ fun NoiseMeterScreen(
                 ) {
                     Text(
                         text = when {
-                            !state.hasPermission -> "Mikrofon izni ver"
-                            state.isMeasuring -> "Ölçümü durdur"
-                            else -> "Ölçümü başlat"
+                            !state.hasPermission -> stringResource(R.string.action_grant_microphone)
+                            state.isMeasuring -> stringResource(R.string.action_stop_measurement)
+                            else -> stringResource(R.string.action_start_measurement)
                         },
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
@@ -184,12 +210,39 @@ fun NoiseMeterScreen(
             ) {
                 BottomAdCard()
             }
+
+            if (isSettingsPanelOpen) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.25f))
+                        .clickable { isSettingsPanelOpen = false },
+                )
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(horizontal = 22.dp, vertical = bottomPadding + 10.dp),
+                ) {
+                    SettingsPanel(
+                        isThresholdAlarmEnabled = state.isThresholdAlarmEnabled,
+                        thresholdDb = state.thresholdDb,
+                        onThresholdAlarmEnabledChange = onThresholdAlarmEnabledChange,
+                        onThresholdDbChange = onThresholdDbChange,
+                        onClose = { isSettingsPanelOpen = false },
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun HeaderBlock(accent: Color, label: String, isMeasuring: Boolean) {
+private fun HeaderBlock(
+    accent: Color,
+    label: String,
+    isMeasuring: Boolean,
+    onOpenSettingsPanel: () -> Unit,
+) {
     val colorScheme = MaterialTheme.colorScheme
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -204,14 +257,14 @@ private fun HeaderBlock(accent: Color, label: String, isMeasuring: Boolean) {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Gürültü Ölçer",
+                        text = stringResource(R.string.app_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.ExtraBold,
                         color = colorScheme.onSurface,
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "Ortam sesini canlı olarak izle ve daha dengeli bir ölçüm gör.",
+                        text = stringResource(R.string.noise_meter_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = colorScheme.onSurfaceVariant,
                     )
@@ -225,37 +278,135 @@ private fun HeaderBlock(accent: Color, label: String, isMeasuring: Boolean) {
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                 ) {
                     Text(
-                        text = if (isMeasuring) "Canlı" else "Hazır",
+                        text = if (isMeasuring) {
+                            stringResource(R.string.status_live)
+                        } else {
+                            stringResource(R.string.status_ready)
+                        },
                         color = accent,
                         fontWeight = FontWeight.Bold,
                     )
                 }
             }
             Spacer(modifier = Modifier.height(14.dp))
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(999.dp))
-                    .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
-                    .padding(horizontal = 14.dp, vertical = 8.dp),
-            ) {
-                Text(text = label, color = accent, fontWeight = FontWeight.SemiBold)
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                ) {
+                    Text(text = label, color = accent, fontWeight = FontWeight.SemiBold)
+                }
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
+                        .clickable(onClick = onOpenSettingsPanel)
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.settings_title_short),
+                        color = colorScheme.onSurface,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
+private fun SettingsPanel(
+    isThresholdAlarmEnabled: Boolean,
+    thresholdDb: Float,
+    onThresholdAlarmEnabledChange: (Boolean) -> Unit,
+    onThresholdDbChange: (Float) -> Unit,
+    onClose: () -> Unit,
+) {
+    val colorScheme = MaterialTheme.colorScheme
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(22.dp),
+        color = colorScheme.surface.copy(alpha = 0.96f),
+    ) {
+        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.settings_title_short),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                TextButton(onClick = onClose) { Text(stringResource(R.string.action_close)) }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.setting_threshold_alarm),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colorScheme.onSurface,
+                )
+                Switch(checked = isThresholdAlarmEnabled, onCheckedChange = onThresholdAlarmEnabledChange)
+            }
+            if (isThresholdAlarmEnabled) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.setting_threshold_db, thresholdDb.toInt()),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorScheme.onSurfaceVariant,
+                )
+                Slider(
+                    value = thresholdDb,
+                    onValueChange = onThresholdDbChange,
+                    valueRange = 60f..100f,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AlarmBanner(level: Float, thresholdDb: Float) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        color = Color(0xFFD32F2F).copy(alpha = 0.16f),
+    ) {
+        Text(
+            text = stringResource(R.string.threshold_exceeded, level.toInt(), thresholdDb.toInt()),
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+            color = Color(0xFFB71C1C),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
 private fun MetricsRow(level: Float, accent: Color, label: String) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        MetricCard(Modifier.weight(1f), "Durum", label, accent)
-        MetricCard(Modifier.weight(1f), "Seviye", "${level.toInt()} dB", accent.copy(alpha = 0.85f))
+        MetricCard(Modifier.weight(1f), stringResource(R.string.metric_status), label, accent)
+        MetricCard(
+            Modifier.weight(1f),
+            stringResource(R.string.metric_level),
+            stringResource(R.string.db_value, level.toInt()),
+            accent.copy(alpha = 0.85f),
+        )
         MetricCard(
             modifier = Modifier.weight(1f),
-            title = "Denge",
+            title = stringResource(R.string.metric_balance),
             value = when {
-                level < 38f -> "Sakin"
-                level < 62f -> "Dengeli"
-                else -> "Yoğun"
+                level < 38f -> stringResource(R.string.balance_calm)
+                level < 62f -> stringResource(R.string.balance_balanced)
+                else -> stringResource(R.string.balance_intense)
             },
             accent = accent.copy(alpha = 0.72f),
         )
@@ -345,7 +496,7 @@ private fun AdBannerCard() {
     val density = LocalDensity.current
     val adView = remember(context) {
         AdView(context).apply {
-            adUnitId = context.getString(com.example.gurultuolcer.R.string.admob_banner_ad_unit_id)
+            adUnitId = context.getString(com.mdstudio.gurultuolcer.R.string.admob_banner_ad_unit_id)
         }
     }
 
@@ -409,7 +560,11 @@ private fun Gauge(level: Float, accent: Color) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(modifier = Modifier.size(16.dp).clip(CircleShape).background(accent))
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "Canlı seviye", color = colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = stringResource(R.string.live_level),
+                color = colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
     }
 }
@@ -418,7 +573,12 @@ private fun Gauge(level: Float, accent: Color) {
 private fun MiniWaveform(points: List<Float>, accent: Color) {
     val colorScheme = MaterialTheme.colorScheme
     Column {
-        Text(text = "Son birkaç saniye", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = colorScheme.onSurface)
+        Text(
+            text = stringResource(R.string.last_seconds),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = colorScheme.onSurface,
+        )
         Spacer(modifier = Modifier.height(14.dp))
         Row(
             modifier = Modifier.fillMaxWidth().height(90.dp),
@@ -451,13 +611,18 @@ private fun PermissionCard(
 ) {
     val colorScheme = MaterialTheme.colorScheme
     Column {
-        Text(text = "Mikrofon izni gerekli", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = colorScheme.onSurface)
+        Text(
+            text = stringResource(R.string.permission_required_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = colorScheme.onSurface,
+        )
         Spacer(modifier = Modifier.height(6.dp))
         Text(
             text = if (shouldShowPermissionRationale) {
-                "Mikrofon izni verilmeden canlı ölçüm çalışmaz. İzni tekrar iste."
+                stringResource(R.string.permission_rationale_text)
             } else {
-                "İzin kapalı olabilir. Gerekirse uygulama ayarlarından mikrofon iznini aç."
+                stringResource(R.string.permission_settings_text)
             },
             style = MaterialTheme.typography.bodyMedium,
             color = colorScheme.onSurfaceVariant,
@@ -469,18 +634,19 @@ private fun PermissionCard(
                 shape = RoundedCornerShape(18.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colorScheme.secondaryContainer, contentColor = colorScheme.onSecondaryContainer),
             ) {
-                Text("İzin iste", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.action_request_permission), fontWeight = FontWeight.Bold)
             }
             Button(
                 onClick = onOpenSettings,
                 shape = RoundedCornerShape(18.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary, contentColor = colorScheme.onPrimary),
             ) {
-                Text("Ayarları aç", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.action_open_settings), fontWeight = FontWeight.Bold)
             }
         }
     }
 }
+
 
 
 
