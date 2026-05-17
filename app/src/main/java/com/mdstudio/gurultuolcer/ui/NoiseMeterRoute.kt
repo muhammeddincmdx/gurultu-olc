@@ -24,8 +24,10 @@ import kotlin.math.abs
 fun NoiseMeterRoute(
     hasAudioPermission: Boolean,
     shouldShowPermissionRationale: Boolean,
+    selectedLanguage: String,
     onRequestPermission: () -> Unit,
     onOpenAppSettings: () -> Unit,
+    onLanguageSelected: (String) -> Unit,
 ) {
     val context = LocalContext.current
     val monitor = remember(context) { NoiseMonitor(context) }
@@ -111,6 +113,8 @@ fun NoiseMeterRoute(
         onOpenSettings = onOpenAppSettings,
         onThresholdAlarmEnabledChange = { isThresholdAlarmEnabled = it },
         onThresholdDbChange = { thresholdDb = it.coerceIn(60f, 100f) },
+        selectedLanguage = selectedLanguage,
+        onLanguageSelected = onLanguageSelected,
     )
 }
 

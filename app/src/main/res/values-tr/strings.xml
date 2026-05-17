@@ -33,6 +33,14 @@
     <string name="setting_calibration">Kalibrasyon farkı: %1$.1f dB</string>
     <string name="setting_threshold_alarm">Eşik alarmı</string>
     <string name="setting_threshold_db">Eşik seviyesi: %1$d dB</string>
+    <string name="setting_language">Uygulama dili</string>
+    <string name="language_system_default">Sistem varsayılanı</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_english">İngilizce</string>
+    <string name="language_spanish">İspanyolca</string>
+    <string name="language_french">Fransızca</string>
+    <string name="language_hindi">Hintçe</string>
+    <string name="language_chinese_simplified">Çince (Basitleştirilmiş)</string>
     <string name="threshold_exceeded">Yüksek ses uyarısı! %1$d dB (sınır %2$d dB)</string>
 
     <string name="permission_required_title">Mikrofon izni gerekli</string>
@@ -48,4 +56,13 @@
     <string name="noise_desc_comfort">Normal konuşma öncesi ev içi arka plan seviyesi.</string>
     <string name="noise_desc_live">Konuşma, cadde veya hareketli çalışma alanı.</string>
     <string name="noise_desc_high">Uzun süre maruz kalırsan yorucu olabilir.</string>
+    <string name="about_title">Uygulama Hakkında</string>
+    <string name="about_text">Gürültü Ölçer, ortam ses seviyesini pratik şekilde takip etmek için bağımsız olarak geliştirilen bir uygulamadır. Uygulama, kullanıcı geri bildirimlerine göre düzenli olarak iyileştirilmektedir.</string>
+    <string name="about_support_button">Geliştirmeyi Destekle</string>
+    <string name="terms_title">Kullanım Koşulları</string>
+    <string name="privacy_title">Gizlilik Politikası</string>
+    <string name="legal_title">Kullanım Koşulları &amp; Gizlilik</string>
+    <string name="privacy_summary">Gizlilik Politikası: Uygulama kişisel verilerinizi toplamaz, saklamaz, işlemez veya üçüncü taraflarla paylaşmaz. Mikrofon izni yalnızca cihaz üzerinde anlık ses seviyesi ölçümü için kullanılır. Ses kaydı alınmaz, depolanmaz ve herhangi bir sunucuya gönderilmez. Uygulama hesap oluşturma gerektirmez ve kimlik belirleyici kişisel bilgi talep etmez.</string>
+    <string name="terms_summary">Kullanım Koşulları: Bu uygulama bilgilendirme ve genel referans amacıyla sunulmaktadır. Ölçüm sonuçları cihaz donanımına, mikrofon kalitesine, sistem işleme farklılıklarına ve ortam koşullarına bağlı olarak değişebilir. Uygulama, sertifikalı profesyonel bir ölçüm cihazı değildir; hukuki, mevzuatsal, tıbbi, iş sağlığı-güvenliği veya resmi uygunluk gerektiren ölçümlerde tek başına kullanılmamalıdır.</string>
+    <string name="legal_footer_note">Kullanım koşulları ve gizlilik politikası, değişikliklere göre güncellenir.</string>
 </resources>

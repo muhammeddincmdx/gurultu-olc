@@ -2,6 +2,7 @@
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,6 +30,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -52,16 +55,15 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import com.mdstudio.gurultuolcer.R
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 
 data class NoiseUiState(
     val level: Float,
@@ -84,6 +86,8 @@ fun NoiseMeterScreen(
     onOpenSettings: () -> Unit,
     onThresholdAlarmEnabledChange: (Boolean) -> Unit,
     onThresholdDbChange: (Float) -> Unit,
+    selectedLanguage: String,
+    onLanguageSelected: (String) -> Unit,
 ) {
     val colorScheme = MaterialTheme.colorScheme
     val isDark = colorScheme.background.red < 0.5f
@@ -101,8 +105,8 @@ fun NoiseMeterScreen(
         label = "noise-level",
     )
     val scrollState = rememberScrollState()
-    val adHeight = 106.dp
     var isSettingsPanelOpen by rememberSaveable { mutableStateOf(false) }
+    BackHandler(enabled = isSettingsPanelOpen) { isSettingsPanelOpen = false }
     val labelText = stringResource(state.labelRes)
     val descriptionText = stringResource(state.descriptionRes)
 
@@ -130,7 +134,7 @@ fun NoiseMeterScreen(
                         start = 22.dp,
                         end = 22.dp,
                         top = topPadding + 14.dp,
-                        bottom = bottomPadding + adHeight + 20.dp,
+                        bottom = bottomPadding + 20.dp,
                     ),
             ) {
                 HeaderBlock(
@@ -203,34 +207,16 @@ fun NoiseMeterScreen(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(start = 22.dp, end = 22.dp, bottom = bottomPadding + 10.dp),
-            ) {
-                BottomAdCard()
-            }
-
             if (isSettingsPanelOpen) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.25f))
-                        .clickable { isSettingsPanelOpen = false },
+                SettingsPanel(
+                    isThresholdAlarmEnabled = state.isThresholdAlarmEnabled,
+                    thresholdDb = state.thresholdDb,
+                    onThresholdAlarmEnabledChange = onThresholdAlarmEnabledChange,
+                    onThresholdDbChange = onThresholdDbChange,
+                    selectedLanguage = selectedLanguage,
+                    onLanguageSelected = onLanguageSelected,
+                    onClose = { isSettingsPanelOpen = false },
                 )
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(horizontal = 22.dp, vertical = bottomPadding + 10.dp),
-                ) {
-                    SettingsPanel(
-                        isThresholdAlarmEnabled = state.isThresholdAlarmEnabled,
-                        thresholdDb = state.thresholdDb,
-                        onThresholdAlarmEnabledChange = onThresholdAlarmEnabledChange,
-                        onThresholdDbChange = onThresholdDbChange,
-                        onClose = { isSettingsPanelOpen = false },
-                    )
-                }
             }
         }
     }
@@ -262,14 +248,36 @@ private fun HeaderBlock(
                         fontWeight = FontWeight.ExtraBold,
                         color = colorScheme.onSurface,
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = stringResource(R.string.noise_meter_subtitle),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colorScheme.onSurfaceVariant,
-                    )
                 }
-                Spacer(modifier = Modifier.width(12.dp))
+                Surface(
+                    shape = RoundedCornerShape(999.dp),
+                    color = colorScheme.surfaceVariant.copy(alpha = 0.72f),
+                ) {
+                    IconButton(onClick = onOpenSettingsPanel) {
+                        Icon(
+                            imageVector = Icons.Filled.Settings,
+                            contentDescription = stringResource(R.string.settings_title_short),
+                            tint = colorScheme.onSurface,
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = stringResource(R.string.noise_meter_subtitle),
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorScheme.onSurfaceVariant,
+            )
+            Spacer(modifier = Modifier.height(14.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                ) {
+                    Text(text = label, color = accent, fontWeight = FontWeight.SemiBold)
+                }
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(999.dp))
@@ -288,30 +296,6 @@ private fun HeaderBlock(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(14.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(999.dp))
-                        .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
-                        .padding(horizontal = 14.dp, vertical = 8.dp),
-                ) {
-                    Text(text = label, color = accent, fontWeight = FontWeight.SemiBold)
-                }
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(999.dp))
-                        .background(colorScheme.surfaceVariant.copy(alpha = 0.72f))
-                        .clickable(onClick = onOpenSettingsPanel)
-                        .padding(horizontal = 14.dp, vertical = 8.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.settings_title_short),
-                        color = colorScheme.onSurface,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
-            }
         }
     }
 }
@@ -322,26 +306,54 @@ private fun SettingsPanel(
     thresholdDb: Float,
     onThresholdAlarmEnabledChange: (Boolean) -> Unit,
     onThresholdDbChange: (Float) -> Unit,
+    selectedLanguage: String,
+    onLanguageSelected: (String) -> Unit,
     onClose: () -> Unit,
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val uriHandler = LocalUriHandler.current
+    val topPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+    val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(22.dp),
-        color = colorScheme.surface.copy(alpha = 0.96f),
+        modifier = Modifier.fillMaxSize(),
+        color = colorScheme.background,
     ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
+        val languageOptions = listOf(
+            "system" to stringResource(R.string.language_system_default),
+            "tr" to stringResource(R.string.language_turkish),
+            "en" to stringResource(R.string.language_english),
+            "es" to stringResource(R.string.language_spanish),
+            "fr" to stringResource(R.string.language_french),
+            "hi" to stringResource(R.string.language_hindi),
+            "zh-CN" to stringResource(R.string.language_chinese_simplified),
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    start = 18.dp,
+                    end = 18.dp,
+                    top = topPadding + 10.dp,
+                    bottom = bottomPadding + 16.dp,
+                ),
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(18.dp),
+                color = colorScheme.surface.copy(alpha = 0.9f),
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    stringResource(R.string.settings_title_short),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                Icon(
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = null,
+                    tint = colorScheme.onSurface,
                 )
-                TextButton(onClick = onClose) { Text(stringResource(R.string.action_close)) }
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(
@@ -368,6 +380,113 @@ private fun SettingsPanel(
                     onValueChange = onThresholdDbChange,
                     valueRange = 60f..100f,
                 )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.setting_language),
+                style = MaterialTheme.typography.bodyLarge,
+                color = colorScheme.onSurface,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                languageOptions.forEach { (code, label) ->
+                    val isSelected = selectedLanguage == code
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onLanguageSelected(code) },
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (isSelected) colorScheme.surface else colorScheme.surfaceVariant.copy(alpha = 0.7f),
+                    ) {
+                        Text(
+                            text = label,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(
+                                    width = if (isSelected) 1.dp else 0.dp,
+                                    color = if (isSelected) colorScheme.onSurface.copy(alpha = 0.45f) else Color.Transparent,
+                                    shape = RoundedCornerShape(12.dp),
+                                )
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
+                            color = colorScheme.onSurface,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
+                color = colorScheme.surface.copy(alpha = 0.95f),
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text(
+                        text = stringResource(R.string.about_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = colorScheme.onSurface,
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = stringResource(R.string.about_text),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    TextButton(
+                        onClick = { uriHandler.openUri("https://www.buymeacoffee.com/mdx0") },
+                    ) {
+                        Text(
+                            text = stringResource(R.string.about_support_button),
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorScheme.primary,
+                        )
+                    }
+                }
+            }
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(18.dp),
+                color = colorScheme.surface.copy(alpha = 0.9f),
+            ) {
+                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
+                    Text(
+                        text = stringResource(R.string.terms_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = colorScheme.onSurface,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.terms_summary),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = stringResource(R.string.privacy_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = colorScheme.onSurface,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.privacy_summary),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = stringResource(R.string.legal_footer_note),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
     }
@@ -444,29 +563,6 @@ private fun GlassCard(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun BottomAdCard() {
-    val colorScheme = MaterialTheme.colorScheme
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(18.dp),
-        color = colorScheme.surface.copy(alpha = 0.92f),
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 72.dp)
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(colorScheme.surfaceVariant.copy(alpha = 0.92f))
-                    .border(1.dp, colorScheme.onSurface.copy(alpha = 0.12f), RoundedCornerShape(14.dp)),
-            ) {
-                AdBannerCard()
-            }
-        }
-    }
-}
-
-@Composable
 private fun BackgroundGlow(accent: Color) {
     Canvas(modifier = Modifier.fillMaxSize()) {
         drawCircle(
@@ -486,40 +582,6 @@ private fun BackgroundGlow(accent: Color) {
             ),
             radius = size.minDimension * 0.28f,
             center = Offset(size.width * 0.18f, size.height * 0.76f),
-        )
-    }
-}
-
-@Composable
-private fun AdBannerCard() {
-    val context = LocalContext.current
-    val density = LocalDensity.current
-    val adView = remember(context) {
-        AdView(context).apply {
-            adUnitId = context.getString(com.mdstudio.gurultuolcer.R.string.admob_banner_ad_unit_id)
-        }
-    }
-
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val containerWidthDp = with(density) { maxWidth.toPx() / density.density }
-        val adWidth = containerWidthDp.toInt().coerceAtLeast(320)
-        val adSize = remember(adWidth) {
-            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth)
-        }
-
-        DisposableEffect(adView, adSize) {
-            adView.setAdSize(adSize)
-            adView.loadAd(AdRequest.Builder().build())
-            onDispose { adView.destroy() }
-        }
-
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(adSize.getHeightInPixels(context).let { px ->
-                    with(density) { (px / density.density).dp }
-                }),
-            factory = { adView },
         )
     }
 }

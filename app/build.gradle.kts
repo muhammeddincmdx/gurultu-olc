@@ -21,8 +21,8 @@ android {
         applicationId = "com.mdstudio.gurultuolcer"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.0.0.026.4"
+        versionCode = 14
+        versionName = "0.0.7.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -80,6 +80,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.compose.ui:ui-viewbinding")
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.google.android.gms:play-services-ads:24.3.0")

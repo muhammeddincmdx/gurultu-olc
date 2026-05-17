@@ -1,0 +1,64 @@
+﻿<resources>
+    <string name="app_name">Sonomètre</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="noise_meter_subtitle">Mesurez le bruit ambiant en direct avec une vue claire.</string>
+    <string name="status_live">En direct</string>
+    <string name="status_ready">Prêt</string>
+    <string name="settings_title_short">Paramètres</string>
+    <string name="action_grant_microphone">Autoriser le micro</string>
+    <string name="action_start_measurement">Démarrer la mesure</string>
+    <string name="action_stop_measurement">Arrêter la mesure</string>
+    <string name="action_close">Fermer</string>
+    <string name="action_reset_zoom">Réinitialiser le zoom</string>
+    <string name="action_request_permission">Demander l’autorisation</string>
+    <string name="action_open_settings">Ouvrir les paramètres</string>
+    <string name="metric_status">État</string>
+    <string name="metric_level">Niveau</string>
+    <string name="metric_balance">Équilibre</string>
+    <string name="balance_calm">Calme</string>
+    <string name="balance_balanced">Équilibré</string>
+    <string name="balance_intense">Intense</string>
+    <string name="db_value">%1$d dB</string>
+    <string name="live_level">Niveau en direct</string>
+    <string name="last_seconds">Dernières secondes</string>
+    <string name="setting_night_light">Lumière nocturne</string>
+    <string name="setting_night_light_level">Niveau de lumière nocturne</string>
+    <string name="setting_pinch_zoom">Zoom à deux doigts : %1$.2fx</string>
+    <string name="setting_calibration">Décalage d’étalonnage : %1$.1f dB</string>
+    <string name="setting_threshold_alarm">Alarme de seuil</string>
+    <string name="setting_threshold_db">Seuil : %1$d dB</string>
+    <string name="setting_language">Langue de l’app</string>
+    <string name="language_system_default">Par défaut du système</string>
+    <string name="language_turkish">Turc</string>
+    <string name="language_english">Anglais</string>
+    <string name="language_spanish">Espagnol</string>
+    <string name="language_french">Français</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_chinese_simplified">Chinois (simplifié)</string>
+    <string name="threshold_exceeded">Alerte bruit élevé ! %1$d dB (limite %2$d dB)</string>
+    <string name="permission_required_title">Autorisation micro requise</string>
+    <string name="permission_rationale_text">La mesure en direct ne fonctionne pas sans l’autorisation micro. Redemandez-la.</string>
+    <string name="permission_settings_text">L’autorisation peut être désactivée. Activez-la dans les paramètres de l’app.</string>
+    <string name="noise_state_silent">Silencieux</string>
+    <string name="noise_state_comfort">Confort</string>
+    <string name="noise_state_live">Actif</string>
+    <string name="noise_state_high">Élevé</string>
+    <string name="noise_desc_silent">Niveau bibliothèque, chambre ou bureau calme.</string>
+    <string name="noise_desc_comfort">Niveau de fond typique avant conversation.</string>
+    <string name="noise_desc_live">Conversation, rue ou espace de travail actif.</string>
+    <string name="noise_desc_high">Une exposition prolongée peut être fatigante.</string>
+    <string name="about_title">À propos de l’application</string>
+    <string name="about_text">Noise Meter est une application développée indépendamment pour le suivi pratique du niveau de bruit ambiant. L’application est améliorée en continu grâce aux retours des utilisateurs.</string>
+    <string name="about_support_button">Soutenir le développement</string>
+    <string name="terms_title">Conditions d’utilisation</string>
+    <string name="privacy_title">Politique de confidentialité</string>
+    <string name="legal_title">Conditions et confidentialité</string>
+    <string name="privacy_summary">Politique de confidentialité: La aplicación no recopila, almacena, procesa ni comparte datos personales con terceros. El permiso de micrófono se utiliza únicamente para medir el nivel de sonido en tiempo real dentro del dispositivo. No se graban, guardan ni transmiten audios.</string>
+    <string name="terms_summary">Conditions d’utilisation: Esta aplicación se ofrece con fines informativos y de referencia general. Las mediciones pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema y las condiciones del entorno. No es un instrumento profesional certificado.</string>
+    <string name="legal_footer_note">Les conditions d’utilisation et la politique de confidentialité peuvent être mises à jour selon les changements futurs.</string>
+</resources>
+
+
+
+

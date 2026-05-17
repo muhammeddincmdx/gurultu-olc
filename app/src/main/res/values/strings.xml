@@ -33,6 +33,14 @@
     <string name="setting_calibration">Calibration offset: %1$.1f dB</string>
     <string name="setting_threshold_alarm">Threshold alarm</string>
     <string name="setting_threshold_db">Threshold level: %1$d dB</string>
+    <string name="setting_language">App language</string>
+    <string name="language_system_default">System default</string>
+    <string name="language_turkish">Turkish</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_french">French</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_chinese_simplified">Chinese (Simplified)</string>
     <string name="threshold_exceeded">High noise alert! %1$d dB (limit %2$d dB)</string>
 
     <string name="permission_required_title">Microphone permission required</string>
@@ -48,4 +56,13 @@
     <string name="noise_desc_comfort">Typical home background level before conversation.</string>
     <string name="noise_desc_live">Conversation, street, or active workspace level.</string>
     <string name="noise_desc_high">Long exposure at this level may be tiring.</string>
+    <string name="about_title">About the App</string>
+    <string name="about_text">Noise Meter is an independently developed application designed for practical ambient sound-level monitoring. The app is maintained and improved based on user feedback.</string>
+    <string name="about_support_button">Support Development</string>
+    <string name="terms_title">Terms of Use</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="legal_title">Terms &amp; Privacy</string>
+    <string name="privacy_summary">Privacy Policy: The application does not collect, store, process, or transfer personal data to third parties. Microphone permission is used only for on-device real-time sound level measurement. Audio recordings are not stored, transmitted, or shared. No account registration is required, and no personally identifiable information is requested.</string>
+    <string name="terms_summary">Terms of Use: This application is provided for informational and general reference purposes. Measurements may vary depending on device hardware, microphone quality, system processing, and environmental conditions. The app is not a certified professional measuring instrument and should not be used where legal, regulatory, medical, occupational safety, or compliance-grade measurements are required.</string>
+    <string name="legal_footer_note">Terms of Use and Privacy Policy may be updated in line with future changes.</string>
 </resources>
