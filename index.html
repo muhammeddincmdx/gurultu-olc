@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MD Studio</title>
+  <meta name="description" content="MD Studio resmi sayfası. Android uygulamalar, gizlilik bağlantıları ve iletişim.">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121b2d;
+      --text: #e8edf7;
+      --muted: #9fb0cc;
+      --accent: #67e8f9;
+      --accent-2: #60a5fa;
+      --line: #24324d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -20%, #1e3a8a33, transparent), var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .brand {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .badge {
+      color: #04131f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .hero, .card {
+      background: linear-gradient(180deg, #16223a, var(--card));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .28);
+    }
+    .hero { padding: 28px; margin-bottom: 16px; }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+    }
+    p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .card { padding: 20px; }
+    h2 { margin: 0 0 10px; font-size: 18px; }
+    ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
+    li { margin: 6px 0; }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #2a3b5b;
+      background: #111b2f;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, #0891b2, #2563eb);
+      border-color: transparent;
+    }
+    footer {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">MD Studio</div>
+      <div class="badge">Official</div>
+    </header>
+
+    <section class="hero">
+      <h1>Bağımsız Android Uygulamaları</h1>
+      <p>
+        MD Studio, sade ve faydalı mobil araçlar geliştirir.
+        Bu sayfada uygulama bağlantıları, gizlilik/kullanım koşulları ve iletişim bilgileri yer alır.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.mdstudio.gurultuolcer" target="_blank" rel="noopener">Gürültü Ölçer'i Aç</a>
+        <a class="btn" href="https://sites.google.com/view/infomdstudio/noise-meter" target="_blank" rel="noopener">Kullanım Koşulları & Gizlilik</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Uygulama</h2>
+        <p><strong>Gürültü Ölçer (Noise Meter)</strong></p>
+        <ul>
+          <li>Gerçek zamanlı dB ölçümü</li>
+          <li>Türkçe / İngilizce arayüz</li>
+          <li>İsteğe bağlı eşik alarmı</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>İletişim</h2>
+        <p>E-posta: <a href="mailto:mdstudiohelp@gmail.com">mdstudiohelp@gmail.com</a></p>
+        <ul>
+          <li>Geri bildirim ve hata raporu gönderebilirsiniz.</li>
+          <li>Kapalı test davetleri için iletişime geçebilirsiniz.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer>
+      © 2026 MD Studio. Tüm hakları saklıdır.
+    </footer>
+  </div>
+</body>
+</html>

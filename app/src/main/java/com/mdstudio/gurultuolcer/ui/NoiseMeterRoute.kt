@@ -28,6 +28,7 @@ fun NoiseMeterRoute(
     onRequestPermission: () -> Unit,
     onOpenAppSettings: () -> Unit,
     onLanguageSelected: (String) -> Unit,
+    onCheckForUpdates: () -> Unit,
 ) {
     val context = LocalContext.current
     val monitor = remember(context) { NoiseMonitor(context) }
@@ -115,6 +116,7 @@ fun NoiseMeterRoute(
         onThresholdDbChange = { thresholdDb = it.coerceIn(60f, 100f) },
         selectedLanguage = selectedLanguage,
         onLanguageSelected = onLanguageSelected,
+        onCheckForUpdates = onCheckForUpdates,
     )
 }
 

@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">Sonomètre</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
     <string name="noise_meter_subtitle">Mesurez le bruit ambiant en direct avec une vue claire.</string>
     <string name="status_live">En direct</string>
     <string name="status_ready">Prêt</string>
@@ -51,12 +51,34 @@
     <string name="about_title">À propos de l’application</string>
     <string name="about_text">Noise Meter est une application développée indépendamment pour le suivi pratique du niveau de bruit ambiant. L’application est améliorée en continu grâce aux retours des utilisateurs.</string>
     <string name="about_support_button">Soutenir le développement</string>
+    <string name="about_support_watch_ads">Soutenir en regardant des publicités</string>
+    <string name="support_ad_progress">Progression du soutien par publicité : %1$d/%2$d</string>
+    <string name="support_ad_ready">La publicité est prête</string>
+    <string name="support_ad_loading">La publicité se charge, réessayez dans quelques secondes</string>
+    <string name="support_ad_not_ready">La publicité n’est pas disponible pour le moment</string>
+    <string name="support_ad_limit_reached">La limite des publicités de soutien est atteinte</string>
+    <string name="support_ad_failed">Échec du chargement de la publicité (%1$d) : %2$s</string>
+    <string name="support_ad_sequence_running">Affichage des publicités de soutien...</string>
+    <string name="support_ad_sequence_complete">La séquence de publicités de soutien est terminée</string>
+    <string name="support_ad_sequence_cancelled">La séquence de publicités de soutien a été annulée</string>
+    <string name="banner_ad_loading">La bannière se charge</string>
+    <string name="banner_ad_failed">Échec du chargement de la bannière (%1$d) : %2$s</string>
     <string name="terms_title">Conditions d’utilisation</string>
     <string name="privacy_title">Politique de confidentialité</string>
     <string name="legal_title">Conditions et confidentialité</string>
-    <string name="privacy_summary">Politique de confidentialité: La aplicación no recopila, almacena, procesa ni comparte datos personales con terceros. El permiso de micrófono se utiliza únicamente para medir el nivel de sonido en tiempo real dentro del dispositivo. No se graban, guardan ni transmiten audios.</string>
-    <string name="terms_summary">Conditions d’utilisation: Esta aplicación se ofrece con fines informativos y de referencia general. Las mediciones pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema y las condiciones del entorno. No es un instrumento profesional certificado.</string>
+    <string name="privacy_summary">Politique de confidentialité : l’application ne collecte, ne stocke, ne traite et ne partage aucune donnée personnelle avec des tiers. L’autorisation du microphone est utilisée uniquement pour mesurer le niveau sonore en temps réel sur l’appareil. Aucun enregistrement audio n’est stocké ni transmis.</string>
+    <string name="terms_summary">Conditions d’utilisation : cette application est fournie à titre informatif et de référence générale. Les mesures peuvent varier selon le matériel de l’appareil, la qualité du microphone, le traitement du système et les conditions de l’environnement. Ce n’est pas un instrument professionnel certifié.</string>
     <string name="legal_footer_note">Les conditions d’utilisation et la politique de confidentialité peuvent être mises à jour selon les changements futurs.</string>
+    <string name="legal_link_title">Informations légales</string>
+    <string name="legal_link_text">Conditions d’utilisation et politique de confidentialité</string>
+    <string name="update_section_title">Mises à jour de l’application</string>
+    <string name="update_section_text">Vérifiez si une version plus récente est disponible sur Google Play.</string>
+    <string name="update_check_button">Vérifier les mises à jour</string>
+    <string name="update_not_available">Aucune nouvelle mise à jour n’est disponible pour le moment</string>
+    <string name="update_check_failed">La vérification des mises à jour n’est pas disponible sur cette installation</string>
+    <string name="update_cancelled">La vérification des mises à jour a été annulée</string>
+    <string name="update_ready_to_install">La mise à jour a été téléchargée. Redémarrage pour terminer l’installation.</string>
+    <string name="update_installing">Installation de la mise à jour téléchargée</string>
 </resources>
 
 

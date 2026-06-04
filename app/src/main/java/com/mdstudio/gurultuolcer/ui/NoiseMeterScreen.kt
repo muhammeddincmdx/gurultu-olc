@@ -1,5 +1,7 @@
 ﻿package com.mdstudio.gurultuolcer.ui
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.activity.compose.BackHandler
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -54,6 +57,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -61,8 +65,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.mdstudio.gurultuolcer.R
 
 data class NoiseUiState(
@@ -88,8 +104,10 @@ fun NoiseMeterScreen(
     onThresholdDbChange: (Float) -> Unit,
     selectedLanguage: String,
     onLanguageSelected: (String) -> Unit,
+    onCheckForUpdates: () -> Unit,
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val context = LocalContext.current
     val isDark = colorScheme.background.red < 0.5f
     val accent = when {
         state.level < 32f -> if (isDark) Color(0xFF7EE081) else Color(0xFF2E7D32)
@@ -105,10 +123,98 @@ fun NoiseMeterScreen(
         label = "noise-level",
     )
     val scrollState = rememberScrollState()
+    val adHeight = 92.dp
     var isSettingsPanelOpen by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = isSettingsPanelOpen) { isSettingsPanelOpen = false }
     val labelText = stringResource(state.labelRes)
     val descriptionText = stringResource(state.descriptionRes)
+    var supportAdWatchCount by rememberSaveable { mutableStateOf(0) }
+    var supportAdsRemaining by rememberSaveable { mutableStateOf(0) }
+    var isSupportAdSequenceActive by rememberSaveable { mutableStateOf(false) }
+    var rewardedAd by remember { mutableStateOf<RewardedAd?>(null) }
+
+    fun loadSupportAd(
+        activity: Activity? = null,
+        autoShow: Boolean = false,
+    ) {
+        RewardedAd.load(
+            context,
+            context.getString(R.string.admob_rewarded_ad_unit_id),
+            AdRequest.Builder().build(),
+            object : RewardedAdLoadCallback() {
+                override fun onAdLoaded(ad: RewardedAd) {
+                    rewardedAd = ad
+                    if (autoShow && activity != null && isSupportAdSequenceActive && supportAdsRemaining > 0) {
+                        var rewardEarned = false
+                        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                rewardedAd = null
+                                if (!rewardEarned) {
+                                    isSupportAdSequenceActive = false
+                                    supportAdsRemaining = 0
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.support_ad_sequence_cancelled),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                    return
+                                }
+                                if (supportAdsRemaining > 0) {
+                                    loadSupportAd(activity = activity, autoShow = true)
+                                } else {
+                                    isSupportAdSequenceActive = false
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.support_ad_sequence_complete),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                }
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                rewardedAd = null
+                                isSupportAdSequenceActive = false
+                                supportAdsRemaining = 0
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.support_ad_failed, adError.code, adError.message),
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        }
+                        ad.show(activity) { _: RewardItem ->
+                            rewardEarned = true
+                            supportAdWatchCount = (supportAdWatchCount + 1).coerceAtMost(3)
+                            supportAdsRemaining = (supportAdsRemaining - 1).coerceAtLeast(0)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.support_ad_progress, supportAdWatchCount, 3),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+                }
+
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    rewardedAd = null
+                    if (isSupportAdSequenceActive || autoShow) {
+                        isSupportAdSequenceActive = false
+                        supportAdsRemaining = 0
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.support_ad_failed, error.code, error.message),
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                }
+            },
+        )
+    }
+
+    DisposableEffect(Unit) {
+        loadSupportAd()
+        onDispose { rewardedAd = null }
+    }
 
     Surface(modifier = Modifier.fillMaxSize(), color = colorScheme.background) {
         BoxWithConstraints(
@@ -134,7 +240,7 @@ fun NoiseMeterScreen(
                         start = 22.dp,
                         end = 22.dp,
                         top = topPadding + 14.dp,
-                        bottom = bottomPadding + 20.dp,
+                        bottom = bottomPadding + adHeight + 20.dp,
                     ),
             ) {
                 HeaderBlock(
@@ -213,10 +319,98 @@ fun NoiseMeterScreen(
                     thresholdDb = state.thresholdDb,
                     onThresholdAlarmEnabledChange = onThresholdAlarmEnabledChange,
                     onThresholdDbChange = onThresholdDbChange,
+                    supportAdWatchCount = supportAdWatchCount,
+                    isSupportAdReady = rewardedAd != null,
+                    isSupportAdSequenceActive = isSupportAdSequenceActive,
+                    onWatchSupportAd = {
+                        val activity = context as? Activity
+                        if (activity == null) {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.support_ad_not_ready),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                            return@SettingsPanel
+                        }
+                        supportAdWatchCount = 0
+                        supportAdsRemaining = 3
+                        isSupportAdSequenceActive = true
+                        val ad = rewardedAd
+                        if (ad == null) {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.support_ad_loading),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                            loadSupportAd(activity = activity, autoShow = true)
+                            return@SettingsPanel
+                        }
+                        var rewardEarned = false
+                        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                rewardedAd = null
+                                if (!rewardEarned) {
+                                    isSupportAdSequenceActive = false
+                                    supportAdsRemaining = 0
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.support_ad_sequence_cancelled),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                    return
+                                }
+                                if (supportAdsRemaining > 0) {
+                                    loadSupportAd(activity = activity, autoShow = true)
+                                } else {
+                                    isSupportAdSequenceActive = false
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.support_ad_sequence_complete),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                }
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                rewardedAd = null
+                                isSupportAdSequenceActive = false
+                                supportAdsRemaining = 0
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.support_ad_failed, adError.code, adError.message),
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        }
+                        ad.show(activity) { _: RewardItem ->
+                            rewardEarned = true
+                            supportAdWatchCount = (supportAdWatchCount + 1).coerceAtMost(3)
+                            supportAdsRemaining = (supportAdsRemaining - 1).coerceAtLeast(0)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.support_ad_progress, supportAdWatchCount, 3),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    },
                     selectedLanguage = selectedLanguage,
                     onLanguageSelected = onLanguageSelected,
+                    onCheckForUpdates = onCheckForUpdates,
                     onClose = { isSettingsPanelOpen = false },
                 )
+            }
+
+            if (!isSettingsPanelOpen) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+                        .zIndex(5f),
+                ) {
+                    BottomAdCard()
+                }
             }
         }
     }
@@ -306,8 +500,13 @@ private fun SettingsPanel(
     thresholdDb: Float,
     onThresholdAlarmEnabledChange: (Boolean) -> Unit,
     onThresholdDbChange: (Float) -> Unit,
+    supportAdWatchCount: Int,
+    isSupportAdReady: Boolean,
+    isSupportAdSequenceActive: Boolean,
+    onWatchSupportAd: () -> Unit,
     selectedLanguage: String,
     onLanguageSelected: (String) -> Unit,
+    onCheckForUpdates: () -> Unit,
     onClose: () -> Unit,
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -444,6 +643,64 @@ private fun SettingsPanel(
                             color = colorScheme.primary,
                         )
                     }
+                    Text(
+                        text = if (isSupportAdSequenceActive) {
+                            stringResource(R.string.support_ad_sequence_running)
+                        } else if (isSupportAdReady) {
+                            stringResource(R.string.support_ad_ready)
+                        } else {
+                            stringResource(R.string.support_ad_loading)
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                    Button(
+                        onClick = onWatchSupportAd,
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !isSupportAdSequenceActive,
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(
+                            text = if (isSupportAdSequenceActive) {
+                                stringResource(R.string.support_ad_sequence_running)
+                            } else {
+                                stringResource(R.string.about_support_watch_ads)
+                            },
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
+                color = colorScheme.surface.copy(alpha = 0.95f),
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text(
+                        text = stringResource(R.string.update_section_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = colorScheme.onSurface,
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = stringResource(R.string.update_section_text),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = onCheckForUpdates,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.update_check_button),
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
                 }
             }
                 }
@@ -456,38 +713,23 @@ private fun SettingsPanel(
             ) {
                 Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
                     Text(
-                        text = stringResource(R.string.terms_title),
+                        text = stringResource(R.string.legal_link_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = colorScheme.onSurface,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.terms_summary),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.privacy_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = colorScheme.onSurface,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.privacy_summary),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.legal_footer_note),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = colorScheme.onSurfaceVariant,
-                    )
+                    TextButton(onClick = { uriHandler.openUri("https://sites.google.com/view/infomdstudio/noise-meter") }) {
+                        Text(
+                            text = stringResource(R.string.legal_link_text),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorScheme.primary,
+                        )
+                    }
                 }
             }
+            Spacer(modifier = Modifier.height(96.dp))
         }
     }
 }
@@ -708,6 +950,79 @@ private fun PermissionCard(
         }
     }
 }
+
+@Composable
+private fun BottomAdCard() {
+    val colorScheme = MaterialTheme.colorScheme
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    var bannerError by remember { mutableStateOf<String?>(null) }
+    var isBannerLoaded by remember { mutableStateOf(false) }
+    val adWidth = (configuration.screenWidthDp - 44).coerceAtLeast(320)
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 72.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = colorScheme.surface.copy(alpha = 0.98f),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (!isBannerLoaded) {
+                Text(
+                    text = bannerError ?: stringResource(R.string.banner_ad_loading),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            AndroidView(
+                modifier = Modifier.fillMaxWidth(),
+                factory = {
+                    AdView(context).apply {
+                        setAdSize(
+                            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+                                context,
+                                adWidth,
+                            ),
+                        )
+                        adUnitId = context.getString(R.string.admob_banner_ad_unit_id)
+                        adListener = object : AdListener() {
+                            override fun onAdLoaded() {
+                                isBannerLoaded = true
+                                bannerError = null
+                            }
+
+                            override fun onAdFailedToLoad(error: LoadAdError) {
+                                isBannerLoaded = false
+                                bannerError = error.message
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.banner_ad_failed, error.code, error.message),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        }
+                        loadAd(AdRequest.Builder().build())
+                    }
+                },
+                update = { adView ->
+                    if (!isBannerLoaded) {
+                        adView.loadAd(AdRequest.Builder().build())
+                    }
+                }
+            )
+        }
+    }
+}
+
+
+
+
 
 
 

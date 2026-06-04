@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">噪音计</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
     <string name="noise_meter_subtitle">实时测量环境噪音，并获得更清晰的界面。</string>
     <string name="status_live">实时</string>
     <string name="status_ready">就绪</string>
@@ -51,12 +51,34 @@
     <string name="about_title">关于应用</string>
     <string name="about_text">Noise Meter 是一款独立开发的应用，用于实用的环境噪音水平监测。应用会根据用户反馈持续改进。</string>
     <string name="about_support_button">支持开发</string>
+    <string name="about_support_watch_ads">通过观看广告支持开发</string>
+    <string name="support_ad_progress">广告支持进度：%1$d/%2$d</string>
+    <string name="support_ad_ready">广告已准备就绪</string>
+    <string name="support_ad_loading">广告正在加载，请几秒后重试</string>
+    <string name="support_ad_not_ready">广告当前不可用</string>
+    <string name="support_ad_limit_reached">已达到支持广告上限</string>
+    <string name="support_ad_failed">广告加载失败（%1$d）：%2$s</string>
+    <string name="support_ad_sequence_running">正在显示支持广告...</string>
+    <string name="support_ad_sequence_complete">支持广告序列已完成</string>
+    <string name="support_ad_sequence_cancelled">支持广告序列已取消</string>
+    <string name="banner_ad_loading">横幅广告正在加载</string>
+    <string name="banner_ad_failed">横幅广告加载失败（%1$d）：%2$s</string>
     <string name="terms_title">使用条款</string>
     <string name="privacy_title">隐私政策</string>
     <string name="legal_title">条款与隐私</string>
-    <string name="privacy_summary">隐私政策: La aplicación no recopila, almacena, procesa ni comparte datos personales con terceros. El permiso de micrófono se utiliza únicamente para medir el nivel de sonido en tiempo real dentro del dispositivo. No se graban, guardan ni transmiten audios.</string>
-    <string name="terms_summary">使用条款: Esta aplicación se ofrece con fines informativos y de referencia general. Las mediciones pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema y las condiciones del entorno. No es un instrumento profesional certificado.</string>
+    <string name="privacy_summary">隐私政策：本应用不会收集、存储、处理或与第三方共享任何个人数据。麦克风权限仅用于在设备上进行实时声音级别测量。不会保存或传输任何音频录音。</string>
+    <string name="terms_summary">使用条款：本应用仅用于信息展示和一般参考。测量结果可能因设备硬件、麦克风质量、系统处理以及环境条件而有所不同。本应用不是经过认证的专业测量工具。</string>
     <string name="legal_footer_note">使用条款和隐私政策会根据后续变更进行更新。</string>
+    <string name="legal_link_title">法律信息</string>
+    <string name="legal_link_text">使用条款与隐私政策</string>
+    <string name="update_section_title">应用更新</string>
+    <string name="update_section_text">检查 Google Play 上是否有更新版本。</string>
+    <string name="update_check_button">检查更新</string>
+    <string name="update_not_available">当前没有可用的新更新</string>
+    <string name="update_check_failed">当前安装方式不支持更新检查</string>
+    <string name="update_cancelled">更新检查已取消</string>
+    <string name="update_ready_to_install">更新已下载，正在重新启动以完成安装。</string>
+    <string name="update_installing">正在安装已下载的更新</string>
 </resources>
 
 

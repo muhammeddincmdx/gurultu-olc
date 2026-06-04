@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">Medidor de Ruido</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
     <string name="noise_meter_subtitle">Mide el sonido ambiente en tiempo real con una vista clara.</string>
     <string name="status_live">En vivo</string>
     <string name="status_ready">Listo</string>
@@ -51,11 +51,33 @@
     <string name="about_title">Acerca de la aplicación</string>
     <string name="about_text">Noise Meter es una aplicación desarrollada de forma independiente para el seguimiento práctico del nivel de ruido ambiental. La aplicación se mejora de forma continua con base en los comentarios de los usuarios.</string>
     <string name="about_support_button">Apoyar el desarrollo</string>
+    <string name="about_support_watch_ads">Apoyar viendo anuncios</string>
+    <string name="support_ad_progress">Progreso del soporte con anuncios: %1$d/%2$d</string>
+    <string name="support_ad_ready">El anuncio está listo</string>
+    <string name="support_ad_loading">El anuncio se está cargando, inténtalo de nuevo en unos segundos</string>
+    <string name="support_ad_not_ready">El anuncio no está disponible en este momento</string>
+    <string name="support_ad_limit_reached">Se alcanzó el límite de anuncios de apoyo</string>
+    <string name="support_ad_failed">No se pudo cargar el anuncio (%1$d): %2$s</string>
+    <string name="support_ad_sequence_running">Mostrando anuncios de apoyo...</string>
+    <string name="support_ad_sequence_complete">La secuencia de anuncios de apoyo se completó</string>
+    <string name="support_ad_sequence_cancelled">La secuencia de anuncios de apoyo fue cancelada</string>
+    <string name="banner_ad_loading">El banner se está cargando</string>
+    <string name="banner_ad_failed">No se pudo cargar el banner (%1$d): %2$s</string>
     <string name="terms_title">Términos de uso</string>
     <string name="privacy_title">Política de privacidad</string>
     <string name="legal_title">Términos y privacidad</string>
     <string name="privacy_summary">Política de privacidad: La aplicación no recopila, almacena, procesa ni comparte datos personales con terceros. El permiso de micrófono se utiliza únicamente para medir el nivel de sonido en tiempo real dentro del dispositivo. No se graban, guardan ni transmiten audios.</string>
     <string name="terms_summary">Términos de uso: Esta aplicación se ofrece con fines informativos y de referencia general. Las mediciones pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema y las condiciones del entorno. No es un instrumento profesional certificado.</string>
     <string name="legal_footer_note">Los términos de uso y la política de privacidad pueden actualizarse según cambios futuros.</string>
+    <string name="legal_link_title">Información legal</string>
+    <string name="legal_link_text">Términos de uso y política de privacidad</string>
+    <string name="update_section_title">Actualizaciones de la aplicación</string>
+    <string name="update_section_text">Comprueba si hay una versión más reciente disponible en Google Play.</string>
+    <string name="update_check_button">Buscar actualizaciones</string>
+    <string name="update_not_available">No hay una actualización nueva disponible en este momento</string>
+    <string name="update_check_failed">La comprobación de actualizaciones no está disponible en esta instalación</string>
+    <string name="update_cancelled">La comprobación de actualizaciones fue cancelada</string>
+    <string name="update_ready_to_install">La actualización se descargó. Reiniciando para completar la instalación.</string>
+    <string name="update_installing">Instalando la actualización descargada</string>
 </resources>
 

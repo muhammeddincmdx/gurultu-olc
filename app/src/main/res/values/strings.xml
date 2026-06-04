@@ -1,7 +1,8 @@
 ﻿<resources>
     <string name="app_name">Noise Meter</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
+    <string name="admob_rewarded_ad_unit_id">ca-app-pub-5011839648327891/8576760526</string>
 
     <string name="noise_meter_subtitle">Track ambient sound live and get a clearer measurement view.</string>
     <string name="status_live">Live</string>
@@ -59,10 +60,32 @@
     <string name="about_title">About the App</string>
     <string name="about_text">Noise Meter is an independently developed application designed for practical ambient sound-level monitoring. The app is maintained and improved based on user feedback.</string>
     <string name="about_support_button">Support Development</string>
+    <string name="about_support_watch_ads">Support by watching ads</string>
+    <string name="support_ad_progress">Ad support progress: %1$d/%2$d</string>
+    <string name="support_ad_ready">Ad is ready</string>
+    <string name="support_ad_loading">Ad is loading, please try again in a few seconds</string>
+    <string name="support_ad_not_ready">Ad is not ready right now</string>
+    <string name="support_ad_limit_reached">You reached the support ad limit</string>
+    <string name="support_ad_failed">Ad failed to load (%1$d): %2$s</string>
+    <string name="support_ad_sequence_running">Showing support ads...</string>
+    <string name="support_ad_sequence_complete">Support ad sequence completed</string>
+    <string name="support_ad_sequence_cancelled">Support ad sequence was cancelled</string>
+    <string name="banner_ad_loading">Banner ad is loading</string>
+    <string name="banner_ad_failed">Banner ad failed to load (%1$d): %2$s</string>
     <string name="terms_title">Terms of Use</string>
     <string name="privacy_title">Privacy Policy</string>
     <string name="legal_title">Terms &amp; Privacy</string>
     <string name="privacy_summary">Privacy Policy: The application does not collect, store, process, or transfer personal data to third parties. Microphone permission is used only for on-device real-time sound level measurement. Audio recordings are not stored, transmitted, or shared. No account registration is required, and no personally identifiable information is requested.</string>
     <string name="terms_summary">Terms of Use: This application is provided for informational and general reference purposes. Measurements may vary depending on device hardware, microphone quality, system processing, and environmental conditions. The app is not a certified professional measuring instrument and should not be used where legal, regulatory, medical, occupational safety, or compliance-grade measurements are required.</string>
     <string name="legal_footer_note">Terms of Use and Privacy Policy may be updated in line with future changes.</string>
+    <string name="legal_link_title">Legal Information</string>
+    <string name="legal_link_text">Terms of Use &amp; Privacy Policy</string>
+    <string name="update_section_title">App Updates</string>
+    <string name="update_section_text">Check whether a newer version is available on Google Play.</string>
+    <string name="update_check_button">Check for updates</string>
+    <string name="update_not_available">No new update is available right now</string>
+    <string name="update_check_failed">Update check is unavailable on this build</string>
+    <string name="update_cancelled">Update check was cancelled</string>
+    <string name="update_ready_to_install">Update downloaded. Restarting to finish installation.</string>
+    <string name="update_installing">Installing downloaded update</string>
 </resources>

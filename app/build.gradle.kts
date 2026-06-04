@@ -1,10 +1,10 @@
-﻿plugins {
+import java.util.Properties
+
+plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
 }
-
-import java.util.Properties
 
 val keystoreProperties = Properties().apply {
     val file = rootProject.file("keystore.properties")
@@ -21,8 +21,8 @@ android {
         applicationId = "com.mdstudio.gurultuolcer"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "0.0.7.5"
+        versionCode = 21
+        versionName = "0.0.4.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -84,6 +84,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-viewbinding")
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.google.android.gms:play-services-ads:24.3.0")
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -94,4 +96,3 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
-

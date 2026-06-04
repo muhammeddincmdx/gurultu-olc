@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.mdstudio.gurultuolcer.ui.NoiseMeterRoute
 import com.mdstudio.gurultuolcer.ui.theme.GurultuOlcerTheme
 import com.google.android.gms.ads.MobileAds
@@ -25,6 +32,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val prefs by lazy { getSharedPreferences("app_settings", MODE_PRIVATE) }
+    private lateinit var appUpdateManager: AppUpdateManager
     private var hasAudioPermission by mutableStateOf(false)
     private var shouldShowPermissionRationale by mutableStateOf(false)
 
@@ -34,10 +42,19 @@ class MainActivity : AppCompatActivity() {
         refreshPermissionState()
     }
 
+    private val updateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult(),
+    ) {
+        if (it.resultCode != RESULT_OK) {
+            Toast.makeText(this, getString(R.string.update_cancelled), Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applySavedLanguage()
         refreshPermissionState()
+        appUpdateManager = AppUpdateManagerFactory.create(this)
 
         lifecycleScope.launch(Dispatchers.IO) {
             MobileAds.initialize(this@MainActivity)
@@ -66,6 +83,9 @@ class MainActivity : AppCompatActivity() {
                         applyLanguage(languageCode)
                         recreate()
                     },
+                    onCheckForUpdates = {
+                        checkForAppUpdates(userInitiated = true)
+                    },
                 )
             }
         }
@@ -74,6 +94,46 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         refreshPermissionState()
+        checkForDownloadedUpdate()
+    }
+
+    private fun checkForAppUpdates(userInitiated: Boolean) {
+        appUpdateManager.appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                when {
+                    appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED -> {
+                        Toast.makeText(this, getString(R.string.update_installing), Toast.LENGTH_SHORT).show()
+                        appUpdateManager.completeUpdate()
+                    }
+
+                    appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                        appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> {
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            updateLauncher,
+                            AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build(),
+                        )
+                    }
+
+                    userInitiated -> {
+                        Toast.makeText(this, getString(R.string.update_not_available), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .addOnFailureListener {
+                if (userInitiated) {
+                    Toast.makeText(this, getString(R.string.update_check_failed), Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun checkForDownloadedUpdate() {
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                Toast.makeText(this, getString(R.string.update_ready_to_install), Toast.LENGTH_SHORT).show()
+                appUpdateManager.completeUpdate()
+            }
+        }
     }
 
     private fun refreshPermissionState() {

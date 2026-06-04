@@ -3,90 +3,249 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gürültü Ölçer - Gizlilik Politikası</title>
+  <title>Noise Meter - Terms & Privacy</title>
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #101321;
-      --muted: #56607a;
-      --accent: #1f6feb;
-      --border: #dfe4f0;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#5b6675;
+      --line:rgba(17,24,39,.12);
+      --soft:rgba(255,255,255,.72);
     }
+    * { box-sizing:border-box; }
     body {
-      margin: 0;
-      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      margin:0;
+      font-family:"Segoe UI", Arial, sans-serif;
+      background:linear-gradient(135deg,#f7f4ef,#eceff3 45%,#f8fafc);
+      color:var(--text);
     }
-    .wrap {
-      max-width: 860px;
-      margin: 32px auto;
-      padding: 0 16px;
+    .wrap { max-width:980px; margin:24px auto; padding:0 16px 24px; }
+    .shell {
+      background:linear-gradient(135deg,#f7f4ef,#eceff3 45%,#f8fafc);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:0 22px 60px rgba(20,30,45,.12);
     }
+    .lang-wrap { text-align:right; margin-bottom:18px; }
+    select {
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(20,30,45,.15);
+      background:var(--soft);
+      font-size:14px;
+      outline:none;
+    }
+    .hero {
+      padding:30px 24px;
+      border-radius:24px;
+      background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(255,255,255,.50));
+      border:1px solid rgba(255,255,255,.72);
+      box-shadow:0 18px 50px rgba(20,30,45,.10);
+      text-align:center;
+    }
+    .badge {
+      display:inline-block;
+      padding:8px 13px;
+      border-radius:999px;
+      background:rgba(17,24,39,.06);
+      border:1px solid rgba(17,24,39,.08);
+      font-size:13px;
+      margin-bottom:12px;
+    }
+    h1 { margin:0; font-size:36px; letter-spacing:-.03em; line-height:1.1; }
+    .subtitle { max-width:700px; margin:14px auto 0; color:var(--muted); line-height:1.55; }
+    .updated { margin-top:10px; font-size:13px; color:#6b7280; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:18px; }
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 8px 24px rgba(16, 19, 33, 0.06);
+      background:rgba(255,255,255,.68);
+      border:1px solid rgba(20,30,45,.10);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:0 12px 30px rgba(20,30,45,.07);
     }
-    h1, h2 { margin-top: 0; }
-    h2 { margin-top: 24px; font-size: 1.15rem; }
-    p, li { color: var(--muted); }
-    code { color: var(--accent); font-weight: 600; }
-    .date { font-size: 0.95rem; color: var(--muted); margin-bottom: 16px; }
+    .card h2,.card h3{ margin:0 0 10px; letter-spacing:-.02em; }
+    .card p, .card li { margin:8px 0; line-height:1.6; color:var(--muted); }
+    .card ul { padding-left:18px; margin:8px 0; }
+    .wide { grid-column:1 / -1; }
+    .footer { margin-top:16px; text-align:center; color:#66717f; font-size:13px; }
+    @media (max-width: 760px){
+      .grid { grid-template-columns:1fr; }
+      h1 { font-size:30px; }
+      .shell { padding:16px; border-radius:22px; }
+      .hero { padding:24px 16px; }
+    }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <section class="card">
-      <h1>Gürültü Ölçer - Gizlilik Politikası</h1>
-      <p class="date">Son güncelleme: 25 Nisan 2026</p>
+    <div id="noise-site" class="shell">
+      <div class="lang-wrap">
+        <select onchange="setLang(this.value)">
+          <option value="tr">🇹🇷 Türkçe</option>
+          <option value="en">🌍 English</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="hi">🇮🇳 हिन्दी</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+        </select>
+      </div>
 
-      <h2>Uygulama Hakkında</h2>
-      <p>Gürültü Ölçer, cihaz mikrofonunu kullanarak ortamdaki ses seviyesini anlık olarak ölçer ve kullanıcıya dB cinsinden gösterir.</p>
+      <section class="hero">
+        <div class="badge app-badge">Sound Level Analyzer</div>
+        <h1 class="title">Noise Meter</h1>
+        <p class="subtitle">Turn your phone into a practical ambient sound level meter using your built-in microphone.</p>
+        <p class="updated"><span class="updated-label">Last updated:</span> <span class="updated-date">20 May 2026</span></p>
+      </section>
 
-      <h2>Toplanan Veriler</h2>
-      <ul>
-        <li>Mikrofon erişimi: Uygulama yalnızca anlık ses seviyesini hesaplamak için mikrofonu kullanır.</li>
-        <li>Reklam verileri: Uygulama, reklam göstermek için Google Mobile Ads (AdMob) SDK kullanır. Bu SDK; cihaz tanımlayıcıları, reklam etkileşimleri ve teknik tanılama verileri gibi bazı bilgileri işleyebilir.</li>
-      </ul>
+      <div class="grid">
+        <section class="card">
+          <h2 class="features-title">Core Features</h2>
+          <ul>
+            <li class="f1">Real-time dB measurement using the device microphone</li>
+            <li class="f2">Live visual feedback and simplified reading experience</li>
+            <li class="f3">Threshold alarm and multilingual interface support</li>
+            <li class="f4">Fast, lightweight and practical daily use</li>
+          </ul>
+        </section>
 
-      <h2>Verilerin Kullanım Amaçları</h2>
-      <ul>
-        <li>Anlık gürültü seviyesini ölçmek ve göstermek</li>
-        <li>Uygulama içinde reklam göstermek</li>
-        <li>Reklam teslimi, güvenlik ve performans süreçlerini sağlamak</li>
-      </ul>
+        <section class="card">
+          <h2 class="use-title">Use Cases</h2>
+          <ul>
+            <li class="u1">Checking home, office or classroom noise levels</li>
+            <li class="u2">Comparing noisy and quiet environments</li>
+            <li class="u3">Monitoring traffic and daily ambient sound exposure</li>
+            <li class="u4">General awareness and non-professional sound checks</li>
+          </ul>
+        </section>
 
-      <h2>Veri Paylaşımı</h2>
-      <ul>
-        <li>Uygulama geliştiricisi olarak biz, mikrofon ses kaydını sunucuya göndermez ve saklamayız.</li>
-        <li>Reklam hizmeti için kullanılan AdMob SDK tarafından işlenen veriler, Google'ın kendi politikalarına tabidir.</li>
-      </ul>
+        <section class="card wide">
+          <h2 class="terms-title">Terms of Use</h2>
+          <p class="terms-text">
+            Noise Meter is provided for informational and general reference purposes. Measurement values may vary depending on device hardware, microphone quality, operating system processing, user distance from the sound source, and background noise conditions.
+          </p>
+          <p class="terms-text-2">
+            The app is not a certified industrial, medical, legal, occupational safety, or compliance-grade measurement instrument. You should not rely on this app alone where official or high-risk measurements are required.
+          </p>
+        </section>
 
-      <h2>Veri Saklama</h2>
-      <ul>
-        <li>Uygulama, kalıcı ses kaydı tutmaz.</li>
-        <li>Ölçüm ve uygulama çalışması sırasında oluşan geçici teknik veriler cihazda kısa süreli tutulabilir.</li>
-      </ul>
+        <section class="card wide">
+          <h2 class="privacy-title">Privacy Policy</h2>
+          <p class="privacy-text">
+            Noise Meter uses microphone permission only to calculate and display sound level values on the device. Audio is processed locally for measurement and is not intentionally recorded, uploaded, or stored on our servers.
+          </p>
+          <p class="privacy-text-2">
+            The app does not require account registration and does not request personally identifying profile data for core functionality. If third-party platform or advertising services are used, their own policies may apply according to their documentation and applicable regulations.
+          </p>
+          <p><strong class="contact-label">Contact:</strong> mdstudiohelp@gmail.com</p>
+          <p class="legal-note">Terms of Use and Privacy Policy may be updated according to future changes.</p>
+        </section>
+      </div>
 
-      <h2>İzinler</h2>
-      <ul>
-        <li><code>RECORD_AUDIO</code>: Gürültü seviyesini ölçmek için gereklidir.</li>
-        <li><code>INTERNET</code> ve <code>ACCESS_NETWORK_STATE</code>: Reklam içeriklerinin yüklenmesi ve ağ durumunun yönetimi için gereklidir.</li>
-        <li><code>com.google.android.gms.permission.AD_ID</code>: Reklam kimliği ile ilgili işlemler için kullanılabilir.</li>
-      </ul>
-
-      <h2>Çocukların Gizliliği</h2>
-      <p>Bu uygulama özellikle çocuklara yönelik tasarlanmamıştır.</p>
-
-      <h2>İletişim</h2>
-      <p>Gizlilik politikası ile ilgili sorular için: <strong>mdstudiohelp@gmail.com</strong></p>
-    </section>
+      <div class="footer copyright">© 2026 Noise Meter</div>
+    </div>
   </main>
+
+<script>
+function setLang(lang){
+const t = {
+tr:{
+badge:"Ses Seviyesi Ölçüm Aracı",
+title:"Gürültü Ölçer",
+subtitle:"Telefonunun dahili mikrofonunu kullanarak ortam ses seviyesini pratik şekilde ölç.",
+updatedLabel:"Son güncelleme:",
+updatedDate:"20 Mayıs 2026",
+features:"Temel Özellikler",
+f1:"Cihaz mikrofonu ile anlık dB ölçümü",
+f2:"Canlı görsel geri bildirim ve sade ölçüm deneyimi",
+f3:"Eşik alarmı ve çok dilli arayüz desteği",
+f4:"Hızlı, hafif ve günlük kullanıma uygun yapı",
+use:"Kullanım Alanları",
+u1:"Ev, ofis veya sınıf ortamındaki gürültü seviyesini kontrol etme",
+u2:"Sessiz ve gürültülü ortamları karşılaştırma",
+u3:"Trafik ve günlük çevresel ses maruziyetini takip etme",
+u4:"Profesyonel olmayan genel ses farkındalığı ölçümleri",
+terms:"Kullanım Koşulları",
+termsText:"Gürültü Ölçer bilgilendirme ve genel referans amacıyla sunulur. Ölçüm değerleri cihaz donanımı, mikrofon kalitesi, işletim sistemi işleme farkları, ses kaynağına olan mesafe ve arka plan gürültüsüne göre değişebilir.",
+termsText2:"Uygulama; endüstriyel, tıbbi, hukuki, iş sağlığı-güvenliği veya resmi uygunluk gerektiren ölçümler için sertifikalı bir cihaz değildir. Resmî veya yüksek riskli ölçümlerde tek başına kullanılmamalıdır.",
+privacy:"Gizlilik Politikası",
+privacyText:"Gürültü Ölçer, mikrofon iznini yalnızca cihaz üzerinde ses seviyesi hesaplamak ve göstermek için kullanır. Ses verileri ölçüm amacıyla yerel olarak işlenir; bilerek kaydedilmez, sunucuya yüklenmez veya saklanmaz.",
+privacyText2:"Uygulama temel kullanım için hesap kaydı gerektirmez ve kimlik belirleyici profil verisi talep etmez. Üçüncü taraf platform veya reklam hizmetleri kullanılması durumunda, ilgili hizmetlerin kendi politikaları ve geçerli mevzuat hükümleri uygulanabilir.",
+contact:"İletişim:",
+legalNote:"Kullanım Koşulları ve Gizlilik Politikası, değişikliklere göre güncellenebilir."
+},
+en:{
+badge:"Sound Level Analyzer",
+title:"Noise Meter",
+subtitle:"Turn your phone into a practical ambient sound level meter using your built-in microphone.",
+updatedLabel:"Last updated:",
+updatedDate:"20 May 2026",
+features:"Core Features",
+f1:"Real-time dB measurement using the device microphone",
+f2:"Live visual feedback and simplified reading experience",
+f3:"Threshold alarm and multilingual interface support",
+f4:"Fast, lightweight and practical daily use",
+use:"Use Cases",
+u1:"Checking home, office or classroom noise levels",
+u2:"Comparing noisy and quiet environments",
+u3:"Monitoring traffic and daily ambient sound exposure",
+u4:"General awareness and non-professional sound checks",
+terms:"Terms of Use",
+termsText:"Noise Meter is provided for informational and general reference purposes. Measurement values may vary depending on device hardware, microphone quality, operating system processing, user distance from the sound source, and background noise conditions.",
+termsText2:"The app is not a certified industrial, medical, legal, occupational safety, or compliance-grade measurement instrument. You should not rely on this app alone where official or high-risk measurements are required.",
+privacy:"Privacy Policy",
+privacyText:"Noise Meter uses microphone permission only to calculate and display sound level values on the device. Audio is processed locally for measurement and is not intentionally recorded, uploaded, or stored on our servers.",
+privacyText2:"The app does not require account registration and does not request personally identifying profile data for core functionality. If third-party platform or advertising services are used, their own policies may apply according to their documentation and applicable regulations.",
+contact:"Contact:",
+legalNote:"Terms of Use and Privacy Policy may be updated according to future changes."
+},
+zh:{
+badge:"声音级别分析工具",title:"噪音计",subtitle:"使用手机内置麦克风，便捷测量环境声音级别。",updatedLabel:"最后更新：",updatedDate:"2026年5月20日",features:"核心功能",f1:"使用设备麦克风进行实时 dB 测量",f2:"实时可视化反馈与简洁读数体验",f3:"阈值提醒与多语言界面支持",f4:"轻量、快速、适合日常使用",use:"使用场景",u1:"检测家庭、办公室或教室噪音",u2:"比较安静与嘈杂环境",u3:"监测交通与日常环境噪音暴露",u4:"用于一般非专业声音参考",terms:"使用条款",termsText:"噪音计仅用于信息展示和一般参考。测量结果可能因设备硬件、麦克风质量、系统处理、与声源距离及背景噪音而变化。",termsText2:"本应用并非经过认证的工业、医疗、法律、职业安全或合规级测量仪器。在官方或高风险测量场景中不应单独依赖本应用。",privacy:"隐私政策",privacyText:"噪音计仅使用麦克风权限在设备本地计算并显示声音级别。音频仅用于测量处理，不会被有意录制、上传或在服务器存储。",privacyText2:"应用核心功能不需要账号注册，也不要求可识别个人身份的资料。如使用第三方平台或广告服务，将按其政策及适用法规执行。",contact:"联系：",legalNote:"使用条款与隐私政策可能会根据后续变更进行更新。"
+},
+hi:{
+badge:"साउंड लेवल एनालाइज़र",title:"नॉइज़ मीटर",subtitle:"फोन के बिल्ट-इन माइक्रोफोन से परिवेशी ध्वनि स्तर को आसानी से मापें।",updatedLabel:"अंतिम अपडेट:",updatedDate:"20 मई 2026",features:"मुख्य विशेषताएं",f1:"डिवाइस माइक्रोफोन से रीयल-टाइम dB मापन",f2:"लाइव विज़ुअल फीडबैक और सरल रीडिंग अनुभव",f3:"थ्रेशोल्ड अलार्म और बहुभाषी इंटरफ़ेस",f4:"तेज़, हल्का और दैनिक उपयोग के लिए उपयुक्त",use:"उपयोग क्षेत्र",u1:"घर, ऑफिस या कक्षा में शोर स्तर जांचना",u2:"शांत और शोर वाले वातावरण की तुलना",u3:"ट्रैफिक और दैनिक परिवेशी ध्वनि का ट्रैक",u4:"सामान्य गैर-पेशेवर ध्वनि संदर्भ",terms:"उपयोग की शर्तें",termsText:"Noise Meter केवल जानकारी और सामान्य संदर्भ के लिए प्रदान किया जाता है। माप परिणाम डिवाइस हार्डवेयर, माइक्रोफोन गुणवत्ता, सिस्टम प्रोसेसिंग, ध्वनि स्रोत की दूरी और बैकग्राउंड नॉइज़ पर निर्भर हो सकते हैं।",termsText2:"यह ऐप प्रमाणित औद्योगिक, चिकित्सा, कानूनी, व्यावसायिक सुरक्षा या अनुपालन-स्तरीय माप उपकरण नहीं है। आधिकारिक या उच्च-जोखिम माप स्थितियों में केवल इसी पर निर्भर न रहें।",privacy:"गोपनीयता नीति",privacyText:"Noise Meter माइक्रोफोन अनुमति का उपयोग केवल डिवाइस पर ध्वनि स्तर की गणना और प्रदर्शन के लिए करता है। ऑडियो मापन हेतु स्थानीय रूप से प्रोसेस होता है; इसे जानबूझकर रिकॉर्ड, अपलोड या सर्वर पर स्टोर नहीं किया जाता।",privacyText2:"ऐप के मुख्य उपयोग के लिए खाता पंजीकरण आवश्यक नहीं है और यह पहचान योग्य व्यक्तिगत प्रोफ़ाइल डेटा नहीं मांगता। यदि तृतीय-पक्ष प्लेटफ़ॉर्म या विज्ञापन सेवाएं उपयोग हों, तो उनकी नीतियां लागू हो सकती हैं।",contact:"संपर्क:",legalNote:"उपयोग की शर्तें और गोपनीयता नीति भविष्य के परिवर्तनों के अनुसार अपडेट की जा सकती हैं।"
+},
+es:{
+badge:"Analizador de nivel de sonido",title:"Medidor de Ruido",subtitle:"Convierte tu teléfono en un medidor práctico de sonido ambiental usando el micrófono integrado.",updatedLabel:"Última actualización:",updatedDate:"20 de mayo de 2026",features:"Funciones principales",f1:"Medición en tiempo real en dB usando el micrófono del dispositivo",f2:"Retroalimentación visual en vivo y lectura simplificada",f3:"Alarma de umbral y soporte multilingüe",f4:"Rápido, ligero y práctico para uso diario",use:"Casos de uso",u1:"Revisar niveles de ruido en casa, oficina o aula",u2:"Comparar entornos silenciosos y ruidosos",u3:"Monitorear tráfico y exposición sonora diaria",u4:"Referencia general no profesional",terms:"Términos de uso",termsText:"Noise Meter se ofrece con fines informativos y de referencia general. Los valores pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema, la distancia a la fuente y el ruido de fondo.",termsText2:"La app no es un instrumento certificado de medición industrial, médica, legal, de seguridad ocupacional o de cumplimiento. No debe usarse como única referencia en mediciones oficiales o de alto riesgo.",privacy:"Política de privacidad",privacyText:"Noise Meter usa el permiso del micrófono solo para calcular y mostrar niveles de sonido en el dispositivo. El audio se procesa localmente y no se graba, sube ni almacena intencionalmente en nuestros servidores.",privacyText2:"La app no requiere registro de cuenta para su función principal y no solicita datos de perfil de identificación personal. Si se usan servicios de terceros, pueden aplicar sus propias políticas.",contact:"Contacto:",legalNote:"Los Términos de uso y la Política de privacidad pueden actualizarse según cambios futuros."
+},
+de:{
+badge:"Schallpegel-Analysator",title:"Lärmmesser",subtitle:"Verwandle dein Smartphone mit dem eingebauten Mikrofon in ein praktisches Schallpegelmessgerät.",updatedLabel:"Zuletzt aktualisiert:",updatedDate:"20. Mai 2026",features:"Kernfunktionen",f1:"Echtzeit-dB-Messung mit dem Gerätemikrofon",f2:"Live-Visualisierung und vereinfachte Ablesung",f3:"Schwellwertalarm und mehrsprachige Oberfläche",f4:"Schnell, leichtgewichtig und alltagstauglich",use:"Anwendungsfälle",u1:"Lärmpegel zu Hause, im Büro oder Klassenzimmer prüfen",u2:"Ruhige und laute Umgebungen vergleichen",u3:"Verkehrs- und Alltagslärm überwachen",u4:"Allgemeine, nicht-professionelle Orientierung",terms:"Nutzungsbedingungen",termsText:"Noise Meter dient Informations- und allgemeinen Referenzzwecken. Messwerte können je nach Gerätehardware, Mikrofonqualität, Systemverarbeitung, Abstand zur Schallquelle und Hintergrundgeräuschen variieren.",termsText2:"Die App ist kein zertifiziertes Industrie-, Medizin-, Rechts-, Arbeitsschutz- oder Compliance-Messgerät. Für offizielle oder risikoreiche Messungen darf sie nicht allein verwendet werden.",privacy:"Datenschutz",privacyText:"Noise Meter verwendet die Mikrofonberechtigung ausschließlich zur lokalen Berechnung und Anzeige von Schallwerten. Audio wird lokal verarbeitet und nicht absichtlich aufgezeichnet, hochgeladen oder auf unseren Servern gespeichert.",privacyText2:"Für die Kernfunktion ist keine Kontoanmeldung erforderlich, und es werden keine persönlich identifizierenden Profildaten angefordert. Bei Drittanbieter-Diensten können deren eigene Richtlinien gelten.",contact:"Kontakt:",legalNote:"Nutzungsbedingungen und Datenschutzrichtlinie können bei Änderungen aktualisiert werden."
+},
+fr:{
+badge:"Analyseur de niveau sonore",title:"Sonomètre",subtitle:"Transformez votre téléphone en outil pratique de mesure sonore avec le microphone intégré.",updatedLabel:"Dernière mise à jour :",updatedDate:"20 mai 2026",features:"Fonctionnalités principales",f1:"Mesure en temps réel en dB via le microphone de l’appareil",f2:"Retour visuel en direct et lecture simplifiée",f3:"Alarme de seuil et interface multilingue",f4:"Rapide, léger et adapté à un usage quotidien",use:"Cas d’usage",u1:"Vérifier le bruit à la maison, au bureau ou en classe",u2:"Comparer les environnements calmes et bruyants",u3:"Suivre le bruit du trafic et l’exposition quotidienne",u4:"Référence générale non professionnelle",terms:"Conditions d’utilisation",termsText:"Noise Meter est fourni à des fins d’information et de référence générale. Les mesures peuvent varier selon le matériel de l’appareil, la qualité du microphone, le traitement système, la distance à la source sonore et le bruit de fond.",termsText2:"L’application n’est pas un instrument certifié de mesure industrielle, médicale, juridique, de sécurité au travail ou de conformité. Elle ne doit pas être utilisée seule pour des mesures officielles ou à haut risque.",privacy:"Politique de confidentialité",privacyText:"Noise Meter utilise l’autorisation du microphone uniquement pour calculer et afficher le niveau sonore sur l’appareil. L’audio est traité localement et n’est pas intentionnellement enregistré, téléversé ou stocké sur nos serveurs.",privacyText2:"L’application ne nécessite pas de compte pour ses fonctions principales et ne demande pas de données de profil permettant l’identification personnelle. En cas d’utilisation de services tiers, leurs propres politiques peuvent s’appliquer.",contact:"Contact :",legalNote:"Les Conditions d’utilisation et la Politique de confidentialité peuvent être mises à jour en fonction des changements futurs."
+}
+};
+
+const x = t[lang] || t.en;
+const root = document.getElementById('noise-site');
+root.querySelector('.app-badge').innerText = x.badge;
+root.querySelector('.title').innerText = x.title;
+root.querySelector('.subtitle').innerText = x.subtitle;
+root.querySelector('.updated-label').innerText = x.updatedLabel;
+root.querySelector('.updated-date').innerText = x.updatedDate;
+root.querySelector('.features-title').innerText = x.features;
+root.querySelector('.f1').innerText = x.f1;
+root.querySelector('.f2').innerText = x.f2;
+root.querySelector('.f3').innerText = x.f3;
+root.querySelector('.f4').innerText = x.f4;
+root.querySelector('.use-title').innerText = x.use;
+root.querySelector('.u1').innerText = x.u1;
+root.querySelector('.u2').innerText = x.u2;
+root.querySelector('.u3').innerText = x.u3;
+root.querySelector('.u4').innerText = x.u4;
+root.querySelector('.terms-title').innerText = x.terms;
+root.querySelector('.terms-text').innerText = x.termsText;
+root.querySelector('.terms-text-2').innerText = x.termsText2;
+root.querySelector('.privacy-title').innerText = x.privacy;
+root.querySelector('.privacy-text').innerText = x.privacyText;
+root.querySelector('.privacy-text-2').innerText = x.privacyText2;
+root.querySelector('.contact-label').innerText = x.contact;
+root.querySelector('.legal-note').innerText = x.legalNote;
+}
+
+setLang('tr');
+</script>
 </body>
 </html>

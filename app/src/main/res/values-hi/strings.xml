@@ -1,7 +1,7 @@
 ﻿<resources>
     <string name="app_name">नॉइज़ मीटर</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
     <string name="noise_meter_subtitle">रियल-टाइम में आसपास की आवाज़ मापें और स्पष्ट दृश्य पाएं।</string>
     <string name="status_live">लाइव</string>
     <string name="status_ready">तैयार</string>
@@ -51,12 +51,34 @@
     <string name="about_title">ऐप के बारे में</string>
     <string name="about_text">Noise Meter एक स्वतंत्र रूप से विकसित ऐप है, जिसे परिवेशी शोर स्तर की व्यावहारिक निगरानी के लिए बनाया गया है। उपयोगकर्ता प्रतिक्रिया के आधार पर ऐप में नियमित सुधार किए जाते हैं।</string>
     <string name="about_support_button">विकास को समर्थन दें</string>
+    <string name="about_support_watch_ads">विज्ञापन देखकर समर्थन करें</string>
+    <string name="support_ad_progress">विज्ञापन समर्थन प्रगति: %1$d/%2$d</string>
+    <string name="support_ad_ready">विज्ञापन तैयार है</string>
+    <string name="support_ad_loading">विज्ञापन लोड हो रहा है, कुछ सेकंड बाद फिर प्रयास करें</string>
+    <string name="support_ad_not_ready">विज्ञापन अभी उपलब्ध नहीं है</string>
+    <string name="support_ad_limit_reached">समर्थन विज्ञापनों की सीमा पूरी हो गई</string>
+    <string name="support_ad_failed">विज्ञापन लोड नहीं हो सका (%1$d): %2$s</string>
+    <string name="support_ad_sequence_running">समर्थन विज्ञापन दिखाए जा रहे हैं...</string>
+    <string name="support_ad_sequence_complete">समर्थन विज्ञापन क्रम पूरा हुआ</string>
+    <string name="support_ad_sequence_cancelled">समर्थन विज्ञापन क्रम रद्द कर दिया गया</string>
+    <string name="banner_ad_loading">बैनर विज्ञापन लोड हो रहा है</string>
+    <string name="banner_ad_failed">बैनर विज्ञापन लोड नहीं हो सका (%1$d): %2$s</string>
     <string name="terms_title">उपयोग की शर्तें</string>
     <string name="privacy_title">गोपनीयता नीति</string>
     <string name="legal_title">शर्तें और गोपनीयता</string>
-    <string name="privacy_summary">गोपनीयता नीति: La aplicación no recopila, almacena, procesa ni comparte datos personales con terceros. El permiso de micrófono se utiliza únicamente para medir el nivel de sonido en tiempo real dentro del dispositivo. No se graban, guardan ni transmiten audios.</string>
-    <string name="terms_summary">उपयोग की शर्तें: Esta aplicación se ofrece con fines informativos y de referencia general. Las mediciones pueden variar según el hardware del dispositivo, la calidad del micrófono, el procesamiento del sistema y las condiciones del entorno. No es un instrumento profesional certificado.</string>
+    <string name="privacy_summary">गोपनीयता नीति: यह ऐप किसी भी व्यक्तिगत डेटा को एकत्र, संग्रहीत, संसाधित या तृतीय पक्ष के साथ साझा नहीं करता। माइक्रोफोन अनुमति केवल डिवाइस पर रियल-टाइम ध्वनि स्तर मापने के लिए उपयोग की जाती है। कोई ऑडियो रिकॉर्डिंग सहेजी या भेजी नहीं जाती।</string>
+    <string name="terms_summary">उपयोग की शर्तें: यह ऐप केवल जानकारी और सामान्य संदर्भ के लिए प्रदान किया गया है। मापन परिणाम डिवाइस हार्डवेयर, माइक्रोफोन गुणवत्ता, सिस्टम प्रोसेसिंग और वातावरणीय परिस्थितियों के अनुसार बदल सकते हैं। यह कोई प्रमाणित पेशेवर मापन उपकरण नहीं है।</string>
     <string name="legal_footer_note">उपयोग की शर्तें और गोपनीयता नीति, भविष्य में होने वाले बदलावों के अनुसार अपडेट की जा सकती हैं।</string>
+    <string name="legal_link_title">कानूनी जानकारी</string>
+    <string name="legal_link_text">उपयोग की शर्तें और गोपनीयता नीति</string>
+    <string name="update_section_title">ऐप अपडेट</string>
+    <string name="update_section_text">जाँचें कि Google Play पर नया संस्करण उपलब्ध है या नहीं।</string>
+    <string name="update_check_button">अपडेट जाँचें</string>
+    <string name="update_not_available">इस समय कोई नया अपडेट उपलब्ध नहीं है</string>
+    <string name="update_check_failed">इस इंस्टॉलेशन में अपडेट जाँच उपलब्ध नहीं है</string>
+    <string name="update_cancelled">अपडेट जाँच रद्द कर दी गई</string>
+    <string name="update_ready_to_install">अपडेट डाउनलोड हो गया है। इंस्टॉलेशन पूरा करने के लिए पुनः प्रारंभ किया जा रहा है।</string>
+    <string name="update_installing">डाउनलोड किया गया अपडेट इंस्टॉल हो रहा है</string>
 </resources>
 
 

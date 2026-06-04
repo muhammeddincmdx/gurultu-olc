@@ -1,7 +1,8 @@
 ﻿<resources>
     <string name="app_name">Gürültü Ölçer</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_app_id">ca-app-pub-5011839648327891~2141476006</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-5011839648327891/5655083713</string>
+    <string name="admob_rewarded_ad_unit_id">ca-app-pub-5011839648327891/8576760526</string>
 
     <string name="noise_meter_subtitle">Ortam sesini canlı izle ve daha net bir ölçüm görünümü elde et.</string>
     <string name="status_live">Canlı</string>
@@ -59,10 +60,32 @@
     <string name="about_title">Uygulama Hakkında</string>
     <string name="about_text">Gürültü Ölçer, ortam ses seviyesini pratik şekilde takip etmek için bağımsız olarak geliştirilen bir uygulamadır. Uygulama, kullanıcı geri bildirimlerine göre düzenli olarak iyileştirilmektedir.</string>
     <string name="about_support_button">Geliştirmeyi Destekle</string>
+    <string name="about_support_watch_ads">Reklam izleyerek destek ol</string>
+    <string name="support_ad_progress">Reklam desteği ilerleme: %1$d/%2$d</string>
+    <string name="support_ad_ready">Reklam hazır</string>
+    <string name="support_ad_loading">Reklam yükleniyor, birkaç saniye sonra tekrar dene</string>
+    <string name="support_ad_not_ready">Reklam şu an hazır değil</string>
+    <string name="support_ad_limit_reached">Destek reklamı sınırına ulaştın</string>
+    <string name="support_ad_failed">Reklam yüklenemedi (%1$d): %2$s</string>
+    <string name="support_ad_sequence_running">Destek reklamları gösteriliyor...</string>
+    <string name="support_ad_sequence_complete">Destek reklam dizisi tamamlandı</string>
+    <string name="support_ad_sequence_cancelled">Destek reklam dizisi iptal edildi</string>
+    <string name="banner_ad_loading">Banner reklam yükleniyor</string>
+    <string name="banner_ad_failed">Banner reklam yüklenemedi (%1$d): %2$s</string>
     <string name="terms_title">Kullanım Koşulları</string>
     <string name="privacy_title">Gizlilik Politikası</string>
     <string name="legal_title">Kullanım Koşulları &amp; Gizlilik</string>
     <string name="privacy_summary">Gizlilik Politikası: Uygulama kişisel verilerinizi toplamaz, saklamaz, işlemez veya üçüncü taraflarla paylaşmaz. Mikrofon izni yalnızca cihaz üzerinde anlık ses seviyesi ölçümü için kullanılır. Ses kaydı alınmaz, depolanmaz ve herhangi bir sunucuya gönderilmez. Uygulama hesap oluşturma gerektirmez ve kimlik belirleyici kişisel bilgi talep etmez.</string>
     <string name="terms_summary">Kullanım Koşulları: Bu uygulama bilgilendirme ve genel referans amacıyla sunulmaktadır. Ölçüm sonuçları cihaz donanımına, mikrofon kalitesine, sistem işleme farklılıklarına ve ortam koşullarına bağlı olarak değişebilir. Uygulama, sertifikalı profesyonel bir ölçüm cihazı değildir; hukuki, mevzuatsal, tıbbi, iş sağlığı-güvenliği veya resmi uygunluk gerektiren ölçümlerde tek başına kullanılmamalıdır.</string>
     <string name="legal_footer_note">Kullanım koşulları ve gizlilik politikası, değişikliklere göre güncellenir.</string>
+    <string name="legal_link_title">Yasal Bilgilendirme</string>
+    <string name="legal_link_text">Kullanım Koşulları &amp; Gizlilik Sözleşmesi</string>
+    <string name="update_section_title">Uygulama Güncellemeleri</string>
+    <string name="update_section_text">Google Play üzerinde daha yeni bir sürüm olup olmadığını denetle.</string>
+    <string name="update_check_button">Güncellemeleri denetle</string>
+    <string name="update_not_available">Şu anda yeni bir güncelleme bulunmuyor</string>
+    <string name="update_check_failed">Bu kurulumda güncelleme denetimi kullanılamıyor</string>
+    <string name="update_cancelled">Güncelleme denetimi iptal edildi</string>
+    <string name="update_ready_to_install">Güncelleme indirildi. Kurulumu tamamlamak için yeniden başlatılıyor.</string>
+    <string name="update_installing">İndirilen güncelleme kuruluyor</string>
 </resources>

@@ -12,6 +12,12 @@ Android mikrofonu ile ortam ses seviyesini (dB) anlık ölçen ve canlı görsel
   - Kullanım Koşulları ve Gizlilik Politikası metinleri uygulama içine eklendi ve detaylandırıldı.
   - Reklam alanı geçici olarak arayüzden kaldırıldı (test reklam görünümü nedeniyle).
   - Sürüm bilgisi güncellendi: `versionCode=14`, `versionName=0.0.7.5`.
+- 04.06.2026 sürüm güncellemesi:
+  - Ayarlara Google Play üzerinden çalışan `Güncellemeleri denetle` desteği eklendi.
+  - `Reklam izleyerek destek ol` akışı tek dokunuşla art arda gösterim mantığına çevrildi.
+  - Banner reklam alanı ve ödüllü reklam davranışı debug/release için ayrıştırıldı.
+  - Dil dosyalarındaki eksik ayar/reklam/güncelleme çevirileri tamamlandı.
+  - Sürüm bilgisi güncellendi: `versionCode=21`, `versionName=0.0.4.6`.
 
 ## Android Desteği
 - `minSdk = 26` -> Android 8.0 (Oreo) ve üzeri
